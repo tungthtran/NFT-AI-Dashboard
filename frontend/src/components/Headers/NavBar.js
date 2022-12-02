@@ -12,9 +12,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import GridViewIcon from '@mui/icons-material/GridView';
-import twitter from "../assets/TwitterChippiesFur.png";
-import me from "../assets/MEChippiesFur.png";
-import discord from "../assets/DiscordChippiesFur.png";
 import logo from "../assets/ChippiesLOGO.jpg";
 import { AuthContext } from '../App';
 
@@ -96,16 +93,13 @@ function Navbar() {
   const classes = useStyles();
 
   const generateActiveTab = (pathname) => {
-    if (pathname === "/mycollection") return "My Collection"
-    else if (pathname === "/upcoming") return "Upcoming Launches"
+    if (pathname === "/upcoming") return "Upcoming Launches"
     else if (pathname === "/new-collections") return "New Releases"
     else if (pathname === "/alltrending") return "Trending"
     else if (pathname === "/1h") return "1h"
     else if (pathname === "/1day") return "24h"
     else if (pathname === "/7days") return "7 Days"
-    else if (pathname === "/upcoming") return "Upcoming Launches"
     else if (pathname === "/watchlist") return "Watchlist"
-    else if (pathname === "/multiview") return "Multiview"
     else return "All Collections"
   }
 
@@ -251,16 +245,10 @@ function Navbar() {
         <ListItem className={classes.contactUs}>
           CONTACT US
         </ListItem>
-        <ListItem>
-          <a target="_blank" rel="noreferrer" href="https://twitter.com/ChippiesNFT"><img className="social" src={twitter} alt="twitter" /></a>
-          <a target="_blank" rel="noreferrer" href="https://magiceden.io/marketplace/chippies_nft"><img className="social" src={me} alt="magiceden" /></a>
-          <a target="_blank" rel="noreferrer" href="https://discord.gg/shH8BT7ExH"><img className="social" src={discord} alt="discord" /></a>
-        </ListItem>
       </List>
 
       <Box className={classes.butArea}>
-        <div>© 2022: Chippies NFT</div>
-        <div>chippiesnft.com</div>
+        <div>© 2022: Senior Project</div>
       </Box>
 
     </Box>}

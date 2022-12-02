@@ -1,29 +1,18 @@
 import React, { useEffect } from "react"
-import './css/App.css';
+import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ConnectWrapper from './pages/ConnectWrapper';
 import 'antd/dist/antd.css';
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Headers/NavBar";
 import { Box, makeStyles } from '@material-ui/core';
-import YourCollection from "./pages/YourCollection";
 import axios from "axios";
-import SentimentBoard from "./components/SentimentBoard"
-import HuntingTool from "./pages/HuntingTool";
-import ReactGA from 'react-ga4';
-import HuntingUnverified from "./components/Hunting/HuntingUnverified";
+import SentimentBoard from "./components/SentimentBoard/SentimentBoard"
 import AllCollection from "./pages/AllCollection";
-import { getNFTs } from "./helper/wallet";
-import HuntingToolOG from "./pages/HuntingToolOG";
-import Multiviewers from "./components/Multiviewers/Multiviewers";
-import CollectionDetails from "./components/Details/CollectionDetails";
+import CollectionDetails from "./components/CollectionDetails/CollectionDetails";
 import Header from "./components/Headers/Header"
 
 export const AuthContext = React.createContext();
 
 const initialState = {
-  isAuthenticated: false,
-  publicKey: null,
-  yourCollectibles: null,
   sentimentBoardUpcoming: null,
   sentimentBoardNewCollection: null,
   sentimentBoard1h: null,
@@ -31,32 +20,11 @@ const initialState = {
   sentimentBoard7d: null,
   sentimentBoardAllTrending: null,
   personalWatchlist: null,
-  activities: null,
-  isAlpha: false,
-  isOG: false,
-  huntedCollections: false,
-  huntedWatchlist: false,
-  alphaKeyPhrase: null,
   watchlist: null,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
-      return {
-        ...state,
-        isAuthenticated: action.payload.isAuthenticated
-      };
-    case "SET_PUBLICKEY":
-      return {
-        ...state,
-        publicKey: action.payload.publicKey
-      }
-    case "SET_YOUR_COLLECTIBLES":
-      return {
-        ...state,
-        yourCollectibles: action.payload.yourCollectibles
-      }
     case "SET_SENTIMENT_BOARD_UPCOMING":
       return {
         ...state,
@@ -87,48 +55,6 @@ const reducer = (state, action) => {
         ...state,
         sentimentBoardAllTrending: action.payload.sentimentBoardAllTrending
       }
-    case "SET_REQUEST_UPCOMING":
-      return {
-        ...state,
-        requestUpcoming: action.payload.requestUpcoming
-      }
-    case "SET_REQUEST_ME":
-      return {
-        ...state,
-        requestME: action.payload.requestME
-      }
-    case "SET_ACTIVITIES":
-      return {
-        ...state,
-        activities: action.payload.activities
-      }
-    case "SET_IS_ALPHA":
-      return {
-        ...state,
-        isAlpha: action.payload.isAlpha,
-        alphaKeyPhrase: action.payload.alphaKeyPhrase,
-        watchlist: action.payload.watchlist
-      }
-    case "SET_IS_OG":
-      return {
-        ...state,
-        isOG: action.payload.isOG
-      }
-    case "SET_HUNTED_COLLECTIONS":
-      return {
-        ...state,
-        huntedCollections: action.payload.huntedCollections
-      }
-    case "SET_HUNTED_WATCHLIST":
-      return {
-        ...state,
-        huntedWatchlist: action.payload.huntedWatchlist
-      }
-    case "SET_PERSONAL_WATCHLIST":
-      return {
-        ...state,
-        personalWatchlist: action.payload.personalWatchlist
-      }
     default:
       return state;
   }
@@ -141,8 +67,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-ReactGA.initialize(process.env.REACT_APP_GA);
 function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
@@ -162,10 +86,6 @@ function App() {
 }
 
   useEffect(() => {
-    ReactGA.send("pageview");
-
-    if (state.isAuthenticated) {
-
       const path = `${process.env.REACT_APP_BACKEND}/load-sentiment-by-tag`
 
       axios.post(path, { "tag": "me-upcoming" }).then(results => {
@@ -179,7 +99,7 @@ function App() {
 
       axios.post(path, { "tag": "new-collections" }).then(results => {
         let data = results.data
-        data.filter(collection => collection.symbol !== "chippies_nft").forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
+        data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
         dispatch({
           type: "SET_SENTIMENT_BOARD_NEW_COLLECTION",
           payload: { sentimentBoardNewCollection: data }
@@ -188,7 +108,6 @@ function App() {
 
       axios.post(path, { "tag": "popular-collections-1day" }).then(results => {
         let data = results.data
-        data = data.filter(collection => collection.symbol !== "chippies_nft")
         data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
         dispatch({
           type: "SET_SENTIMENT_BOARD_1D",
@@ -198,7 +117,6 @@ function App() {
 
       axios.post(path, { "tag": "popular-collections-7days" }).then(results => {
         let data = results.data
-        data = data.filter(collection => collection.symbol !== "chippies_nft")
         data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
         dispatch({
           type: "SET_SENTIMENT_BOARD_7D",
@@ -208,7 +126,6 @@ function App() {
 
       axios.post(path, { "tag": "popular-collections-1h" }).then(results => {
         let data = results.data
-        data = data.filter(collection => collection.symbol !== "chippies_nft")
         data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
         dispatch({
           type: "SET_SENTIMENT_BOARD_1H",
@@ -216,22 +133,7 @@ function App() {
         })
       })
 
-      axios.post(path, { "tag": "request-me" }).then(results => {
-        dispatch({
-          type: "SET_REQUEST_ME",
-          payload: { requestME: results.data.filter(collection => collection.symbol !== "chippies_nft") }
-        })
-      })
-
-      axios.post(path, { "tag": "request-upcoming" }).then(results => {
-        dispatch({
-          type: "SET_REQUEST_UPCOMING",
-          payload: { requestUpcoming: results.data }
-        })
-      })
-    }
-
-  }, [state.isAuthenticated])
+  }, [])
 
   useEffect(() => {
     let allCollection = []
@@ -245,59 +147,6 @@ function App() {
     }
     
   }, [state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d, state.requestME])
-
-
-  useEffect(() => {
-    if (state.publicKey) {
-      const path_watchlist = `${process.env.REACT_APP_BACKEND}/get-personal-watch-list-by-wallet`
-
-      const publicKey = state.publicKey
-      axios.post(`${process.env.REACT_APP_BACKEND}/get-me-activities-by-wallet`, {
-        "walletAddress": publicKey
-      }).then(res => {
-        let activities = res.data.result[0] ? res.data.result[0].filter(activity => activity.txType === 'exchange') : [];
-        dispatch({
-          type: "SET_ACTIVITIES",
-          payload: { activities: activities }
-        })
-      });
-
-      axios.post(path_watchlist, { 'walletAddress': state.publicKey }).then(results => {
-        dispatch({
-          type: "SET_PERSONAL_WATCHLIST",
-          payload: { personalWatchlist: results.data.watchlist ? results.data.watchlist : [] }
-        })
-      })
-
-    }
-  }, [state.publicKey])
-
-
-  useEffect(() => {
-    if (state.activities) {
-      const publicKey = state.publicKey
-      getNFTs(publicKey, state.activities).then(nfts => {
-        dispatch({
-          type: "SET_YOUR_COLLECTIBLES",
-          payload: { yourCollectibles: nfts }
-        })
-      });
-    }
-    // eslint-disable-next-line
-  }, [state.activities])
-
-  useEffect(() => {
-
-    if (state.publicKey && state.isOG) {
-      axios.get(process.env.REACT_APP_BACKEND + "/get-all-collections").then(res => {
-        dispatch({
-          type: "SET_HUNTED_COLLECTIONS",
-          payload: { huntedCollections: res.data.allCollections }
-        })
-      })
-    }
-    // eslint-disable-next-line
-  }, [state.isOG])
 
   return (
     <AuthContext.Provider
@@ -314,30 +163,30 @@ function App() {
               {state.isAuthenticated ? <Header /> : null}
               <Switch>
                 <Route path="/new-collections">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="new-collections" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="new-collections" /> 
                 </Route>
                 <Route path="/1h">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="1h" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="1h" />
                 </Route>
                 <Route path="/1day">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="1day" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="1day" />
                 </Route>
                 <Route path="/7days">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="7days" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="7days" />
                 </Route>
                 <Route path="/upcoming">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="upcoming" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="upcoming" />
                 </Route>
                 <Route path="/alltrending">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="all" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="all" />
                 </Route>
                 <Route path="/watchlist">
-                  {state.isAuthenticated ? <SentimentBoard dispatch={dispatch} date="watchlist" /> : <ConnectWrapper />}
+                  <SentimentBoard dispatch={dispatch} date="watchlist" />
                 </Route>    
-                <Route path="/details/:collectionName" render={(props) => {return state.isAuthenticated ? <CollectionDetails {...props} key={window.location.pathname} /> : <ConnectWrapper/> }}>
+                <Route path="/details/:collectionName" render={(props) => {return <CollectionDetails {...props} key={window.location.pathname} />}}>
                 </Route>
                 <Route path="/">
-                  {state.isAuthenticated ? <AllCollection /> : <ConnectWrapper />}
+                  <AllCollection />
                 </Route>
               </Switch>
             </Box>

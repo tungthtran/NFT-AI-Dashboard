@@ -19,7 +19,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import DiscordVolumeChart from '../Graph/DiscordVolumeChart';
 import Loading from '../Loading/Loading';
 import Message from "../Dialog/Message";
-import "../../css/Chat.css";
+import "../css/Chat.css";
 import ChatHeader from '../Dialog/ChatHeader';
 import TradingViewChartV2 from '../Graph/TradingViewChartV2';
 
