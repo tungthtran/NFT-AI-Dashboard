@@ -17,13 +17,12 @@ const Header = () => {
 
     useEffect(() => {
 
-        if (state.sentimentBoardAllTrending && state.sentimentBoardUpcoming && state.requestME && state.requestUpcoming) {
-            let allCollections = [].concat(state.sentimentBoardAllTrending).concat(state.sentimentBoardUpcoming).concat(state.requestME).concat(state.requestUpcoming)
-
+        if (state.sentimentBoardAllTrending && state.sentimentBoardUpcoming) {
+            let allCollections = [].concat(state.sentimentBoardAllTrending).concat(state.sentimentBoardUpcoming)
             setData(allCollections)
         }
 
-    }, [state.sentimentBoardAllTrending, state.sentimentBoardUpcoming, state.requestME, state.requestUpcoming])
+    }, [state.sentimentBoardAllTrending, state.sentimentBoardUpcoming])
 
     return (
         <div className="header">

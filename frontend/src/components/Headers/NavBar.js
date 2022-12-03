@@ -13,7 +13,7 @@ import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import GridViewIcon from '@mui/icons-material/GridView';
 import logo from "../assets/ChippiesLOGO.jpg";
-import { AuthContext } from '../App';
+import { AuthContext } from '../../App';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { chunks } from '../helper/utils'
 import MenuItem from '@mui/material/MenuItem';
-import { AuthContext } from "../App";
+import { AuthContext } from "../../App";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
@@ -15,14 +15,14 @@ const CollectionCard = React.lazy(() => import('./CollectionCard'));
 
 const useStyles = makeStyles(() => ({
     ul: {
-      "& .MuiPaginationItem-root": {
-        color: "white",
-        '&.Mui-selected': {
-            background: 'grey',
-          },
-      }, 
+        "& .MuiPaginationItem-root": {
+            color: "white",
+            '&.Mui-selected': {
+                background: 'grey',
+            },
+        },
     }
-  }));
+}));
 
 const SentimentBoard = ({ dispatch, date }) => {
 

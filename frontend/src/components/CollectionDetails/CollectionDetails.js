@@ -16,19 +16,14 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import CircleIcon from '@mui/icons-material/Circle';
-import DiscordVolumeChart from '../Graph/DiscordVolumeChart';
 import Loading from '../Loading/Loading';
-import Message from "../Dialog/Message";
 import "../css/Chat.css";
-import ChatHeader from '../Dialog/ChatHeader';
 import TradingViewChartV2 from '../Graph/TradingViewChartV2';
 
 const CollectionDetails = (props) => {
 
     const { state } = React.useContext(AuthContext);
     const [timeSeries, setTimeSeries] = React.useState(null);
-
-    const [discordData, setDiscordData] = React.useState(null);
 
     const [emotionData, setEmotionData] = React.useState(null);
 
@@ -52,7 +47,6 @@ const CollectionDetails = (props) => {
 
     const [announcements, setAnnouncements] = useState([])
 
-    const [time, setTime] = useState("30min")
     // const [isNormalized, setIsNormalized] = React.useState(false);
     // const [addListedCount, setAddListedCount] = React.useState(false);
 
@@ -104,12 +98,6 @@ const CollectionDetails = (props) => {
         setTimeSeries(timeSeriesData)
     }
 
-    const getDiscordTimeSeriesData = async (name) => {
-        const url = process.env.REACT_APP_BACKEND + "/load-discord-time-series"
-        const timeSeriesData = (await axios.post(url, { "collectionName": name })).data
-        setDiscordData(timeSeriesData)
-    }
-
     const getEmotionTimeSeriesData = async (name) => {
         const url = process.env.REACT_APP_BACKEND + "/load-collection-emotion-time-series-web"
         const timeSeriesData = (await axios.post(url, { "query": name })).data
@@ -119,7 +107,6 @@ const CollectionDetails = (props) => {
     useEffect(() => {
         if (name) {
             getTwitterTimeSeriesData(name);
-            getDiscordTimeSeriesData(name);
             getEmotionTimeSeriesData(name);
         }
 
@@ -188,10 +175,6 @@ const CollectionDetails = (props) => {
     const handleChangeTab = (event, newValue) => {
         setOpenedTab(newValue)
     }
-
-    const handleChangeTime = (event, newValue) => {
-        setTime(newValue);
-    };
 
     // const description = "Changing the value of sentiment scores and floor prices under [0, 1] scale for better comparison";
 
@@ -462,81 +445,6 @@ const CollectionDetails = (props) => {
                                 </Grid>}
 
                             </Grid>}
-
-                        {/* discord analytics start here */}
-                        {openedTab === 'discord' && <Grid container>
-                            {discordData && discordData.length !== 0 && <Grid container>
-                                <Grid container>
-                                    <Grid style={{ marginBottom: "2vh", display: "flex", alignItems: "center" }} xs={12} item>
-                                        Time:
-                                        <Box sx={{ width: '100%', marginLeft: "1vw" }}>
-                                            <Tabs
-                                                value={time}
-                                                onChange={handleChangeTime}
-                                                textColor="secondary"
-                                                indicatorColor="secondary"
-                                                aria-label="Date Tab"
-                                            >
-                                                <Tab value="30min" label={<span style={{ color: 'white' }}>30min</span>} />
-                                                <Tab value="1h" label={<span style={{ color: 'white' }}>1h</span>} />
-                                                <Tab value="6h" label={<span style={{ color: 'white' }}>6h</span>} />
-                                                <Tab value="1d" label={<span style={{ color: 'white' }}>1d</span>} />
-                                            </Tabs>
-                                        </Box>
-                                    </Grid>
-
-                                    {time === "30min" && <Grid xs={6} item>
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.volume["30m"])} title="Chat Volume" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.unique_users["30m"])} title="Unique Users Chat" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.msg_per_user["30m"].mean)} title="Average Messages Per User" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.len_msg["30m"].mean)} title="Average Messages Length" />
-                                    </Grid>}
-
-                                    {time === "1h" && <Grid xs={6} item>
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.volume["1h"])} title="Chat Volume" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.unique_users["1h"])} title="Unique Users Chat" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.msg_per_user["1h"].mean)} title="Average Messages Per User" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.len_msg["1h"].mean)} title="Average Messages Length" />
-                                    </Grid>}
-
-                                    {time === "6h" && <Grid xs={6} item>
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.volume["6h"])} title="Chat Volume" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.unique_users["6h"])} title="Unique Users Chat" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.msg_per_user["6h"].mean)} title="Average Messages Per User" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.len_msg["6h"].mean)} title="Average Messages Length" />
-                                    </Grid>}
-
-                                    {time === "1d" && <Grid xs={6} item>
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.volume["1d"])} title="Chat Volume" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.unique_users["1d"])} title="Unique Users Chat" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.msg_per_user["1d"].mean)} title="Average Messages Per User" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.len_msg["1d"].mean)} title="Average Messages Length" />
-                                    </Grid>}
-
-                                    <Grid xs={6} item>
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.member_count)} title="Total Members Count" />
-                                        <DiscordVolumeChart time={discordData.map(data => data.createdAt).reverse()} value={discordData.map(data => data.active_member_count)} title={`Online Members Count (${round(discordData[0].active_member_count / discordData[0].member_count * 100)} %)`} />
-                                        <div className="chat">
-                                            <ChatHeader channelName={name} discord={discord} />
-                                            <div className="chat__messages">
-                                                {announcements.map((announcement) => (
-                                                    <Message
-                                                        timestamp={announcement.timestamp}
-                                                        message={announcement.content}
-                                                        author_avatar={`https://cdn.discordapp.com/avatars/${announcement.author_id}/${announcement.author_avatar}.webp?size=64`}
-                                                        author_name={announcement.author_name}
-                                                    />
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </Grid>
-
-                                </Grid>
-
-                            </Grid>}
-
-                            {discordData && discordData.length === 0 && <div style={{ fontSize: "1.5vw" }}>Discord has not been analyzed!</div>}
-                        </Grid>}
 
                     </Grid>}
                 </Grid>
