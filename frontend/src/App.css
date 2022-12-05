@@ -1,38 +1,54 @@
 .App {
   text-align: center;
+  background-color: rgb(30, 33, 66);
+  font-family: "BumbleGum";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html,body{
+  overflow-x: hidden;
+  overscroll-behavior: none
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.MuiTableRow-root:hover { 
+  background-color: rgb(54, 57, 91) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.MuiTypography-h6{
   color: white;
+  overflow: auto;
+  font-weight: bold;
 }
 
-.App-link {
-  color: #61dafb;
+.MuiTypography-root {
+  font-family: 'BumbleGum' !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MuiTablePagination-root {
+  color: white !important;
+}
+
+.MuiTablePagination-selectLabel {
+  color: white !important;
+}
+
+.MuiTypography-caption {
+  color: white !important;
+}
+
+.MuiTablePagination-selectIcon {
+  color: white !important
+}
+
+.MuiTableSortLabel-root {
+  color: rgb(96, 98, 123) !important
+}
+
+.MuiTableCell-root {
+  border-bottom: none !important;
+  color: white !important;
+  font-family: "BumbleGum" !important;
+}
+
+.MuiSelect-root {
+  font-family: "BumbleGum" !important;
 }

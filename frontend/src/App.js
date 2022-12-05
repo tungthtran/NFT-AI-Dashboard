@@ -19,8 +19,6 @@ const initialState = {
   sentimentBoard1d: null,
   sentimentBoard7d: null,
   sentimentBoardAllTrending: null,
-  personalWatchlist: null,
-  watchlist: null,
 };
 
 const reducer = (state, action) => {
@@ -137,8 +135,8 @@ function App() {
 
   useEffect(() => {
     let allCollection = []
-    if (state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d && state.sentimentBoard1h && state.requestME) {
-      allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d).concat(state.requestME).concat(state.sentimentBoard1h)
+    if (state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d && state.sentimentBoard1h) {
+      allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d).concat(state.sentimentBoard1h)
       allCollection = getUniqueCollections(allCollection)
       dispatch({
         type: "SET_SENTIMENT_BOARD_ALL_TRENDING",
@@ -146,7 +144,7 @@ function App() {
       })
     }
     
-  }, [state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d, state.requestME])
+  }, [state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
 
   return (
     <AuthContext.Provider
@@ -160,7 +158,7 @@ function App() {
           <Box display="flex">
             <Navbar />
             <Box className={classes.content}>
-              {state.isAuthenticated ? <Header /> : null}
+              <Header />
               <Switch>
                 <Route path="/new-collections">
                   <SentimentBoard dispatch={dispatch} date="new-collections" /> 
@@ -180,9 +178,6 @@ function App() {
                 <Route path="/alltrending">
                   <SentimentBoard dispatch={dispatch} date="all" />
                 </Route>
-                <Route path="/watchlist">
-                  <SentimentBoard dispatch={dispatch} date="watchlist" />
-                </Route>    
                 <Route path="/details/:collectionName" render={(props) => {return <CollectionDetails {...props} key={window.location.pathname} />}}>
                 </Route>
                 <Route path="/">

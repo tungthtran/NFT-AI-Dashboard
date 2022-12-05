@@ -27,13 +27,13 @@ const AllCollection = () => {
 
         let allCollection = []
         let uniqueCol = []
-        if (state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d && state.requestME) {
-            allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d).concat(state.requestME)
+        if (state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d) {
+            allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d)
             allCollection.map(collection => cleanShock(collection))
             uniqueCol = getUniqueCollections(allCollection)
         }
         setData(uniqueCol)
-    }, [state.sentimentBoardNewCollection, state.sentimentBoard1d, state.sentimentBoard7d, state.requestME])
+    }, [state.sentimentBoardNewCollection, state.sentimentBoard1d, state.sentimentBoard7d])
 
     const getUniqueCollections = (collections) => {
         let collectionSet = new Set()
