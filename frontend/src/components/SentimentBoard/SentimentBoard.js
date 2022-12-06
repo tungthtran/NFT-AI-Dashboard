@@ -1,11 +1,11 @@
 import { FormControl, Grid, makeStyles, Select } from '@material-ui/core';
 import React, { useEffect, useState, Suspense } from 'react';
-import "../css/Dashboard.css"
+import "../../css/Dashboard.css"
 import CircularProgress from '@mui/material/CircularProgress';
 import { Autocomplete } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { chunks } from '../helper/utils'
+import { chunks } from '../../helper/utils'
 import MenuItem from '@mui/material/MenuItem';
 import { AuthContext } from "../../App";
 import Pagination from '@mui/material/Pagination';
@@ -63,24 +63,11 @@ const SentimentBoard = ({ dispatch, date }) => {
 
     useEffect(() => {
         switch (date) {
-            case "watchlist":
-                setMe(true);
-                let watchlistCollection = []
-                if (state.sentimentBoardUpcoming && state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d && state.requestME && state.requestUpcoming && state.personalWatchlist) {
-                    let allCollection = [].concat(state.sentimentBoardUpcoming).concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d).concat(state.requestME).concat(state.requestUpcoming)
-                    allCollection = getUniqueCollections(allCollection)
-                    watchlistCollection = allCollection.filter(c => state.personalWatchlist.map(i => i.collection_name).includes(c.name))
-                }
-                setSentimentData(watchlistCollection);
-                break;
             case "upcoming":
                 setMe(false);
                 let upcoming = []
                 if (state.sentimentBoardUpcoming) {
                     upcoming = [].concat(state.sentimentBoardUpcoming)
-                }
-                if (state.requestUpcoming) {
-                    upcoming = [].concat(state.requestUpcoming).concat(upcoming)
                 }
                 setSentimentData(upcoming)
                 break;
@@ -106,14 +93,14 @@ const SentimentBoard = ({ dispatch, date }) => {
                 setMe(true);
                 let allCollection = []
                 if (state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d && state.sentimentBoard1h) {
-                    allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d).concat(state.requestME).concat(state.sentimentBoard1h)
+                    allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d).concat(state.sentimentBoard1h)
                     allCollection = getUniqueCollections(allCollection)
                 }
                 setSentimentData(allCollection)
                 break;
         }
 
-    }, [date, state.personalWatchlist, state.sentimentBoardUpcoming, state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d, state.requestUpcoming, state.requestME])
+    }, [date, state.sentimentBoardUpcoming, state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
 
 
     useEffect(() => {
@@ -277,9 +264,6 @@ const SentimentBoard = ({ dispatch, date }) => {
         }
         else if (date === "7days") {
             return "7 Days Popular 🔥"
-        }
-        else if (date === 'watchlist') {
-            return "Watchlist"
         }
         else {
             return "Trending Collections"

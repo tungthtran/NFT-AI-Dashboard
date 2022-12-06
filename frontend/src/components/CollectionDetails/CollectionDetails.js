@@ -17,7 +17,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import CircleIcon from '@mui/icons-material/Circle';
 import Loading from '../Loading/Loading';
-import "../css/Chat.css";
+import "../../css/Chat.css";
 import TradingViewChartV2 from '../Graph/TradingViewChartV2';
 
 const CollectionDetails = (props) => {
@@ -44,8 +44,6 @@ const CollectionDetails = (props) => {
     const [discord, setDiscord] = useState(null)
     const [openedTab, setOpenedTab] = useState("overview")
     const [isUpcoming, setIsUpcoming] = useState(false)
-
-    const [announcements, setAnnouncements] = useState([])
 
     // const [isNormalized, setIsNormalized] = React.useState(false);
     // const [addListedCount, setAddListedCount] = React.useState(false);
@@ -86,12 +84,6 @@ const CollectionDetails = (props) => {
         },
     }));
 
-    const getAnnouncements = async (name) => {
-        const url = process.env.REACT_APP_BACKEND + "/get-announcements"
-        const announcementsData = (await axios.post(url, { "collectionName": name })).data
-        setAnnouncements(announcementsData)
-    }
-
     const getTwitterTimeSeriesData = async (name) => {
         const url = process.env.REACT_APP_BACKEND + "/load-collection-time-series"
         const timeSeriesData = (await axios.post(url, { "name": name })).data
@@ -113,16 +105,9 @@ const CollectionDetails = (props) => {
     }, [name])
 
     useEffect(() => {
-        if (isUpcoming) {
-            getAnnouncements(name);
-        }
+        if (state.sentimentBoardAllTrending && state.sentimentBoardUpcoming) {
 
-    }, [isUpcoming, name])
-
-    useEffect(() => {
-        if (state.sentimentBoardAllTrending && state.sentimentBoardUpcoming && state.requestUpcoming) {
-
-            let collections = [].concat(state.sentimentBoardAllTrending).concat(state.sentimentBoardUpcoming).concat(state.requestUpcoming)
+            let collections = [].concat(state.sentimentBoardAllTrending).concat(state.sentimentBoardUpcoming)
 
             let collection = collections.find(c => c.name === name);
 
@@ -162,7 +147,7 @@ const CollectionDetails = (props) => {
 
         }
         // eslint-disable-next-line
-    }, [name, state.sentimentBoardAllTrending, state.sentimentBoardUpcoming, state.requestUpcoming])
+    }, [name, state.sentimentBoardAllTrending, state.sentimentBoardUpcoming])
 
     // const normalize = () => {
     //     setIsNormalized(!isNormalized);
