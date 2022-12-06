@@ -90,7 +90,7 @@ const BorderLinearProgressHype = styled(LinearProgress)(({ theme }) => ({
 }));
 
 export default function CollectionCard({ img, name, description, emotion_pos, emotion_anger, emotion_sadness, url,
-    neg, neu, pos, hype, twitter, discord, me, price, supply, website, launch_date, tag, hunting, shock, dispatch, db_tag }) {
+    neg, neu, pos, hype, twitter, discord, me, price, supply, website }) {
     const descriptionToolTip = <div>
         <Typography variant="body2" style={{ marginBottom: "1vh" }}>{description}</Typography>
         <div className="statChip">
@@ -98,13 +98,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
             {supply && <Chip label={supply + " supply "} style={{ color: "white", backgroundColor: "rgb(54, 57, 91)" }} />}
         </div></div>
 
-    const [openHuntingVerification, setOpenHuntingVerification] = React.useState(false);
-
     const history = useHistory();
-
-    const toggleOpenHuntingVerification = () => {
-        if (!openHuntingVerification) setOpenHuntingVerification(!openHuntingVerification);
-    }
 
     const directToDetailPage = (e) => {
         e.preventDefault();
@@ -115,12 +109,10 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
         <ThemeProvider theme={theme}>
             <Card style={{ border: "none", borderRadius: '2em', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: 'rgb(37, 40, 77)', marginRight: "1vh", position: "relative" }}>
 
-                {launch_date && <Chip label={new Date(launch_date).toDateString()} style={{ position: "absolute", right: 10, top: 5, color: "white", backgroundColor: "rgb(54, 57, 91)", zIndex: 1 }} />}
-
                 <CardActionArea>
                     <Tooltip title={descriptionToolTip} placement="bottom">
                         <CardMedia
-                            onClick={hunting ? toggleOpenHuntingVerification : directToDetailPage}
+                            onClick={directToDetailPage}
                             component="img"
                             image={img}
                             alt={name}
@@ -128,7 +120,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                         />
                     </Tooltip>
 
-                    <CardContent onClick={hunting ? toggleOpenHuntingVerification : directToDetailPage}>
+                    <CardContent onClick={directToDetailPage}>
                         <Typography gutterBottom variant="h5" color="white" style={{ marginBottom: "3vh" }}>
                             {name}
                         </Typography>

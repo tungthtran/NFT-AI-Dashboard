@@ -175,7 +175,7 @@ const SentimentBoard = ({ dispatch, date }) => {
             neu = neu.toFixed(0)
             pos = pos.toFixed(0)
 
-            let { twitter_emo_avg_anger, twitter_emo_avg_joy, twitter_emo_avg_optimism, twitter_emo_avg_sadness, price, supply, website, launchDate } = collection
+            let { twitter_emo_avg_anger, twitter_emo_avg_joy, twitter_emo_avg_optimism, twitter_emo_avg_sadness, price, supply, website } = collection
 
             let emotion_pos = ((twitter_emo_avg_joy + twitter_emo_avg_optimism) * 100).toFixed(0)
             twitter_emo_avg_anger = (twitter_emo_avg_anger * 100).toFixed(0)
@@ -212,13 +212,7 @@ const SentimentBoard = ({ dispatch, date }) => {
                             website={website}
                             twitter={twitter}
                             discord={discord}
-                            launch_date={launchDate}
                             me={me}
-                            tag={date}
-                            shock={collection.shock}
-                            hunting={false}
-                            dispatch={dispatch}
-                            db_tag={collection.tag}
                         />
                     </Suspense>
                 </Grid>

@@ -17,9 +17,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
    const [data2, setData2] = useState([]);
  
    const [data3, setData3] = useState([]);
- 
-   // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
- 
+  
    const OFFSET = 14400000;
  
    function timeToTz(d) {

@@ -18,15 +18,12 @@ import Box from '@mui/material/Box';
 import CircleIcon from '@mui/icons-material/Circle';
 import Loading from '../Loading/Loading';
 import "../../css/Chat.css";
-import TradingViewChartV2 from '../Graph/TradingViewChartV2';
 
 const CollectionDetails = (props) => {
 
     const { state } = React.useContext(AuthContext);
     const [timeSeries, setTimeSeries] = React.useState(null);
-
-    const [emotionData, setEmotionData] = React.useState(null);
-
+    
     const [name] = useState(props.match.params.collectionName)
 
     const [emotion_pos, setEmotion_pos] = useState(null)
@@ -86,16 +83,9 @@ const CollectionDetails = (props) => {
         setTimeSeries(timeSeriesData)
     }
 
-    const getEmotionTimeSeriesData = async (name) => {
-        const url = process.env.REACT_APP_BACKEND + "/load-collection-emotion-time-series-web"
-        const timeSeriesData = (await axios.post(url, { "query": name })).data
-        setEmotionData(timeSeriesData)
-    }
-
     useEffect(() => {
         if (name) {
             getTwitterTimeSeriesData(name);
-            getEmotionTimeSeriesData(name);
         }
 
     }, [name])
@@ -326,25 +316,6 @@ const CollectionDetails = (props) => {
                                         </Grid>
                                     </div>
                                 </Grid>
-
-                                {emotionData && emotionData !== {} && <Grid xs={8} item style={{ marginTop: "6vh" }}>
-                                    <TradingViewChartV2 name={name} title={"Sentiment breakdown"} value={emotionData.positiveDict} value2={emotionData.neutralDict} value3={emotionData.negativeDict} currentValue={round(emotionData.currentPositive)} currentValue2={round(emotionData.currentNeutral)} currentValue3={round(emotionData.currentNegative)} />
-
-                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgb(132, 235, 176)", marginRight: "0.25vw" }} />
-                                            <div>Positive</div>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgb(250, 224, 145)", marginRight: "0.25vw" }} />
-                                            <div>Neutral</div>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgb(240, 131, 131)", marginRight: "0.25vw" }} />
-                                            <div>Negative</div>
-                                        </div>
-                                    </div>
-                                </Grid>}
                             </Grid>}
 
                         {openedTab === "twitter" && timeSeries !== undefined && timeSeries !== null &&
