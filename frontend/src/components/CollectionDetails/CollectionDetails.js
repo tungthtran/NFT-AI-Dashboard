@@ -12,9 +12,6 @@ import { FaTwitter, FaDiscord, } from "react-icons/fa";
 import LanguageIcon from '@mui/icons-material/Language';
 import magicedenicon from '../../assets/magicedenicon.png';
 import IconButton from '@mui/material/IconButton';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import CircleIcon from '@mui/icons-material/Circle';
 import Loading from '../Loading/Loading';
 import "../../css/Chat.css";
@@ -39,7 +36,6 @@ const CollectionDetails = (props) => {
     const [website, setWebsite] = useState(null)
     const [twitter, setTwitter] = useState(null)
     const [discord, setDiscord] = useState(null)
-    const [openedTab, setOpenedTab] = useState("overview")
 
     const BorderLinearProgressRed = styled(LinearProgress)(({ theme }) => ({
         height: 9,
@@ -131,10 +127,6 @@ const CollectionDetails = (props) => {
         // eslint-disable-next-line
     }, [name, state.sentimentBoardAllTrending])
 
-    const handleChangeTab = (event, newValue) => {
-        setOpenedTab(newValue)
-    }
-
     const latestValue = (array) => {
         return array[array.length - 1]
     }
@@ -176,22 +168,6 @@ const CollectionDetails = (props) => {
                             followers={latestValue(timeSeries.follower)}
                             shock={shock}
                         />}
-
-                        <Box sx={{ width: '100%', marginBottom: "5vh" }}>
-                            <Tabs
-                                value={openedTab}
-                                onChange={handleChangeTab}
-                                textColor="primary"
-                                indicatorColor="primary"
-                                aria-label="Opened Tab"
-                            >
-                                <Tab value="overview" label={<span style={{ color: 'white', fontSize: "20px" }}>Overview</span>} />
-                                <Tab value="me" label={<span style={{ color: 'white', fontSize: "20px" }}>ME Insights</span>} />
-                                <Tab value="twitter" label={<span style={{ color: 'white', fontSize: "20px" }}>Twitter Sentiment</span>} />
-                            </Tabs>
-                        </Box>
-
-                        {openedTab === "overview" &&
                             <Grid container>
                                 <Grid xs={8} item>
                                     <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count" isNormalized={true} />
@@ -316,33 +292,7 @@ const CollectionDetails = (props) => {
                                         </Grid>
                                     </div>
                                 </Grid>
-                            </Grid>}
-
-                        {openedTab === "twitter" && timeSeries !== undefined && timeSeries !== null &&
-                            <Grid container>
-                                <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} title="Sentiment score" />
-                                </Grid>
-
-                                <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.hype.map((x) => x * 100)} title="Hype score" />
-                                </Grid>
-                            </Grid>}
-
-                        {openedTab === "me" && timeSeries !== undefined && timeSeries !== null &&
-                            <Grid container>
-                                <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.floorPrice} title="Floor Price" />
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.volume24h} title="Volume (24 hours)" />
-                                </Grid>
-
-                                <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.listedCount} title="Listed count" />
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.volumeAll} title="Volume (All time)" />
-                                </Grid>
-
-                            </Grid>}
-
+                            </Grid>
                     </Grid>}
                 </Grid>
             </Grid>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import "../../css/Header.css";
 import { Link } from 'react-router-dom';
-import { Box, List, ListItem, ListItemIcon, makeStyles, Collapse, Typography } from '@material-ui/core';
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
+import { Box, List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import HomeIcon from '@mui/icons-material/Home';
 
@@ -75,11 +73,6 @@ function Navbar() {
   }
 
   const [activeTab, setActiveTab] = useState(() => generateActiveTab(window.location.pathname))
-  const [openTrending, setOpenTrending] = useState(false)
-
-  const handleOpenTrending = () => {
-    setOpenTrending(!openTrending)
-  }
 
   const navList = [
     {
@@ -94,78 +87,11 @@ function Navbar() {
     },
   ];
 
-  const trendingList = [
-    {
-      label: 'All Trending',
-      path: '/alltrending',
-      icon: (<Typography />)
-    },
-    {
-      label: 'New Releases',
-      path: '/new-collections',
-      icon: (<Typography />)
-    },
-    {
-      label: '1h 🔥',
-      path: '/1h',
-      icon: (<Typography />)
-    },
-    {
-      label: '24h',
-      path: '/1day',
-      icon: (<Typography />)
-    },
-    {
-      label: '7 Days',
-      path: '/7days',
-      icon: (<Typography />)
-    },
-  ]
-
   return (
     <>
     {<Box className={classes.root}>
       <List style={{marginTop: "5vh"}}>
         {navList.map(nav => {
-          if (nav['label'] === "Trending") {
-            return (
-              <div>
-                <ListItem
-                  key={nav['label']}
-                  className={activeTab === nav['label'] ? classes.navItemActive : classes.navItem}
-                  button 
-                  onClick={() => {
-                    handleOpenTrending()
-                  }}>
-                  <ListItemIcon className={classes.navItemIcon}>
-                    {nav['icon']}
-                  </ListItemIcon>
-                  {nav['label']}
-                  {openTrending ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={openTrending} timeout="auto">
-                  <List component="div" disablePadding>
-                    {trendingList.map(nav2 => (
-                      <ListItem
-                        key={nav2['label']}
-                        className={activeTab === nav2['label'] ? classes.navItemActive : classes.navItem}
-                        button component={Link}
-                        to={nav2['path']}
-                        onClick={() => {
-                          setActiveTab(nav2['label'])
-                        }
-                        }>
-                        <ListItemIcon className={classes.navItemIcon}>
-                          {nav2['icon']}
-                        </ListItemIcon>
-                        {nav2['label']}
-                      </ListItem>
-                    ))}
-                  </List>
-                </Collapse>
-              </div>)
-          }
-
           return <ListItem
             key={nav['label']}
             className={activeTab === nav['label'] ? classes.navItemActive : classes.navItem}
