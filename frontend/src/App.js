@@ -13,7 +13,6 @@ import Header from "./components/Headers/Header"
 export const AuthContext = React.createContext();
 
 const initialState = {
-  sentimentBoardUpcoming: null,
   sentimentBoardNewCollection: null,
   sentimentBoard1h: null,
   sentimentBoard1d: null,
@@ -23,11 +22,6 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SET_SENTIMENT_BOARD_UPCOMING":
-      return {
-        ...state,
-        sentimentBoardUpcoming: action.payload.sentimentBoardUpcoming
-      }
     case "SET_SENTIMENT_BOARD_NEW_COLLECTION":
       return {
         ...state,
@@ -85,15 +79,6 @@ function App() {
 
   useEffect(() => {
       const path = `${process.env.REACT_APP_BACKEND}/load-sentiment-by-tag`
-
-      axios.post(path, { "tag": "me-upcoming" }).then(results => {
-        let data = results.data
-        data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
-        dispatch({
-          type: "SET_SENTIMENT_BOARD_UPCOMING",
-          payload: { sentimentBoardUpcoming: data }
-        })
-      })
 
       axios.post(path, { "tag": "new-collections" }).then(results => {
         let data = results.data
@@ -171,9 +156,6 @@ function App() {
                 </Route>
                 <Route path="/7days">
                   <SentimentBoard dispatch={dispatch} date="7days" />
-                </Route>
-                <Route path="/upcoming">
-                  <SentimentBoard dispatch={dispatch} date="upcoming" />
                 </Route>
                 <Route path="/alltrending">
                   <SentimentBoard dispatch={dispatch} date="all" />

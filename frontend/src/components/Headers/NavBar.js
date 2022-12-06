@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Box, List, ListItem, ListItemIcon, makeStyles, Collapse, Typography } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import HomeIcon from '@mui/icons-material/Home';
 
@@ -85,8 +84,7 @@ function Navbar() {
   const classes = useStyles();
 
   const generateActiveTab = (pathname) => {
-    if (pathname === "/upcoming") return "Upcoming Launches"
-    else if (pathname === "/new-collections") return "New Releases"
+    if (pathname === "/new-collections") return "New Releases"
     else if (pathname === "/alltrending") return "Trending"
     else if (pathname === "/1h") return "1h"
     else if (pathname === "/1day") return "24h"
@@ -111,11 +109,6 @@ function Navbar() {
       label: 'Trending',
       path: '/alltrending',
       icon: (<TrendingUpIcon />)
-    },
-    {
-      label: 'Upcoming Launches',
-      path: '/upcoming',
-      icon: (<RocketLaunchIcon />)
     },
   ];
 

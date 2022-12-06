@@ -7,7 +7,6 @@ import { round } from '../helper/utils';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import HomeInfoCard from '../components/Headers/HomeInfoCard';
 import { useHistory } from "react-router-dom";
 import solanaImage from "../assets/solana.jpeg"
 import HelpIcon from '@mui/icons-material/Help';
@@ -27,13 +26,13 @@ const AllCollection = () => {
 
         let allCollection = []
         let uniqueCol = []
-        if (state.sentimentBoardNewCollection && state.sentimentBoard1d && state.sentimentBoard7d) {
-            allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d)
+        if (state.sentimentBoardNewCollection && state.sentimentBoard1h && state.sentimentBoard1d && state.sentimentBoard7d) {
+            allCollection = allCollection.concat(state.sentimentBoardNewCollection).concat(state.sentimentBoard1h).concat(state.sentimentBoard1d).concat(state.sentimentBoard7d)
             allCollection.map(collection => cleanShock(collection))
             uniqueCol = getUniqueCollections(allCollection)
         }
         setData(uniqueCol)
-    }, [state.sentimentBoardNewCollection, state.sentimentBoard1d, state.sentimentBoard7d])
+    }, [state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
 
     const getUniqueCollections = (collections) => {
         let collectionSet = new Set()
@@ -193,8 +192,6 @@ const AllCollection = () => {
     return (
         <div>
             <h1 className="dashboard_title">Home</h1>
-
-            <HomeInfoCard />
 
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
                 <div style={{color: "rgb(96, 98, 123)", marginRight: "1vw"}}>Time: </div>

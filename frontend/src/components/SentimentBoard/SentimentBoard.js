@@ -36,9 +36,9 @@ const SentimentBoard = ({ dispatch, date }) => {
 
     const [sortedData, setSortedData] = useState([])
 
-    const [sortValue, setSortValue] = useState(date === "upcoming" ? "Launch date" : "Positive")
+    const [sortValue, setSortValue] = useState("Positive")
 
-    const [orderValue, setOrderValue] = useState(date === "upcoming" ? "Ascending" : "Descending")
+    const [orderValue, setOrderValue] = useState("Descending")
 
     const [me, setMe] = useState(true)
 
@@ -63,14 +63,6 @@ const SentimentBoard = ({ dispatch, date }) => {
 
     useEffect(() => {
         switch (date) {
-            case "upcoming":
-                setMe(false);
-                let upcoming = []
-                if (state.sentimentBoardUpcoming) {
-                    upcoming = [].concat(state.sentimentBoardUpcoming)
-                }
-                setSentimentData(upcoming)
-                break;
             case "1h":
                 setMe(true);
                 if (state.sentimentBoard1h) setSentimentData(state.sentimentBoard1h)
@@ -100,30 +92,20 @@ const SentimentBoard = ({ dispatch, date }) => {
                 break;
         }
 
-    }, [date, state.sentimentBoardUpcoming, state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
+    }, [date, state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
 
 
     useEffect(() => {
-        if (date === "upcoming") {
-            setSortValue("Launch date")
-            setOrderValue("Ascending")
-            setSortedData(sentimentData.sort((a, b) => parseFloat((new Date(a.launchDate)).getTime()) - parseFloat((new Date(b.launchDate)).getTime())))
-        }
-        else {
-            setSortValue("Positive")
-            setOrderValue("Descending")
-            setSortedData(sentimentData.sort((a, b) => b.twitter_sent_avg_positive - a.twitter_sent_avg_positive));
-        }
+
+        setSortValue("Positive")
+        setOrderValue("Descending")
+        setSortedData(sentimentData.sort((a, b) => b.twitter_sent_avg_positive - a.twitter_sent_avg_positive));
+
         // eslint-disable-next-line
     }, [sentimentData])
 
     const handleHelper = (sortBy, order) => {
         switch (sortBy) {
-            //if date === "upcoming"
-            case "Launch date":
-                if (order === "Descending") setSortedData(sentimentData.sort((a, b) => parseFloat((new Date(b.launchDate)).getTime()) - parseFloat((new Date(a.launchDate)).getTime())))
-                else setSortedData(sentimentData.sort((a, b) => parseFloat((new Date(a.launchDate)).getTime()) - parseFloat((new Date(b.launchDate)).getTime())))
-                break;
             case "Positive":
                 if (order === "Descending") setSortedData(sentimentData.sort((a, b) => b.twitter_sent_avg_positive - a.twitter_sent_avg_positive))
                 else setSortedData(sentimentData.sort((a, b) => a.twitter_sent_avg_positive - b.twitter_sent_avg_positive))
@@ -259,9 +241,6 @@ const SentimentBoard = ({ dispatch, date }) => {
         else if (date === "1day") {
             return "24h Popular 🔥"
         }
-        else if (date === "upcoming") {
-            return "Upcoming Launches"
-        }
         else if (date === "7days") {
             return "7 Days Popular 🔥"
         }
@@ -332,8 +311,6 @@ const SentimentBoard = ({ dispatch, date }) => {
                         value={sortValue}
                         onChange={handleSortByChange}
                     >
-                        {date === "upcoming" && <MenuItem key={7} value={"Launch date"}>🗓️ Launch date</MenuItem>}
-                        {date === "upcoming" && <MenuItem key={0} value={"Hype"}>🔥 Hype</MenuItem>}
                         <MenuItem key={1} value={"Positive"}>👍 Positive</MenuItem>
                         <MenuItem key={2} value={"Neutral"}>🤏 Neutral</MenuItem>
                         <MenuItem key={3} value={"Negative"}>👎 Negative</MenuItem>
