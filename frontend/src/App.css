@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: rgb(30, 33, 66);
+  background-color: #0e1217;
   font-family: "BumbleGum";
 }
 
@@ -40,7 +40,7 @@ html,body{
 }
 
 .MuiTableSortLabel-root {
-  color: rgb(96, 98, 123) !important
+  color: #A8B3CF !important
 }
 
 .MuiTableCell-root {

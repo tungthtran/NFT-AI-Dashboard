@@ -194,7 +194,7 @@ const AllCollection = () => {
             <h1 className="dashboard_title">Home</h1>
 
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                <div style={{color: "rgb(96, 98, 123)", marginRight: "1vw"}}>Time: </div>
+                <div style={{color: "#A8B3CF", marginRight: "1vw"}}>Time: </div>
                 <Box sx={{ width: '100%' }}>
                     <Tabs
                         value={time}
@@ -214,7 +214,7 @@ const AllCollection = () => {
 
             
             <MaterialTable
-                style={{ color: "white", backgroundColor: "rgb(30, 33, 66)", border: "none", borderRadius: "2em", marginBottom: "10vh" }}
+                style={{ color: "white", backgroundColor: "#1c1f26", border: "none", borderRadius: "2em", marginBottom: "10vh" }}
                 isLoading={data.length === 0}
                 icons={tableIcons}
                 columns={columns}
@@ -227,8 +227,8 @@ const AllCollection = () => {
                     showTitle: false,
                     emptyRowsWhenPaging: false,
                     pageSizeOptions: [20, 50, 100],
-                    headerStyle: { backgroundColor: "rgb(30, 33, 66)", fontFamily: "BumbleGum", fontSize: "1vw" },
-                    searchFieldStyle: { color: "white", backgroundColor: "rgb(37, 40, 77)", border: "none", borderRadius: "2em", width: "100%" }
+                    headerStyle: { backgroundColor: "#1c1f26", fontFamily: "BumbleGum", fontSize: "1vw" },
+                    searchFieldStyle: { color: "white", backgroundColor: "#1c1f26", border: "none", borderRadius: "2em", width: "100%" }
                 }}
                 localization={{
                     body: {

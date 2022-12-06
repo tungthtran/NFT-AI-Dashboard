@@ -23,7 +23,7 @@ const CollectionDetails = (props) => {
 
     const { state } = React.useContext(AuthContext);
     const [timeSeries, setTimeSeries] = React.useState(null);
-    
+
     const [name] = useState(props.match.params.collectionName)
 
     const [emotion_pos, setEmotion_pos] = useState(null)
@@ -45,7 +45,7 @@ const CollectionDetails = (props) => {
         height: 9,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: 'rgb(37, 40, 77)',
+            backgroundColor: '#1c1f26',
         },
         [`& .${linearProgressClasses.bar}`]: {
             borderRadius: 5,
@@ -57,7 +57,7 @@ const CollectionDetails = (props) => {
         height: 9,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: 'rgb(37, 40, 77)',
+            backgroundColor: '#1c1f26',
         },
         [`& .${linearProgressClasses.bar}`]: {
             borderRadius: 5,
@@ -69,7 +69,7 @@ const CollectionDetails = (props) => {
         height: 9,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: 'rgb(37, 40, 77)',
+            backgroundColor: '#1c1f26',
         },
         [`& .${linearProgressClasses.bar}`]: {
             borderRadius: 5,

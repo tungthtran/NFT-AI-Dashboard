@@ -249,7 +249,7 @@ const SentimentBoard = ({ dispatch, date }) => {
         options={sortedData}
         autoComplete
         autoHighlight
-        style={{ backgroundColor: "rgb(37, 40, 77)", width: "40%", borderRadius: "2em" }}
+        style={{ backgroundColor: "#1c1f26", width: "40%", borderRadius: "2em" }}
         onChange={(event, newValue) => {
             if (!newValue) {
                 setSortedData(sentimentData);
@@ -280,7 +280,7 @@ const SentimentBoard = ({ dispatch, date }) => {
                 label="🔍 Search collection"
                 autoComplete='off'
                 InputLabelProps={{
-                    style: { color: 'rgb(96, 98, 123)' },
+                    style: { color: '#A8B3CF' },
                 }}
                 inputProps={{
                     ...params.inputProps,
@@ -295,12 +295,12 @@ const SentimentBoard = ({ dispatch, date }) => {
     />)
 
     const sortBy = (
-        <div style={{ display: "flex", alignItems: "center", color: 'rgb(96, 98, 123)' }}>
+        <div style={{ display: "flex", alignItems: "center", color: '#A8B3CF' }}>
             Sort by:
             <div>
                 <FormControl sx={{ m: 1, width: 200 }}>
                     <Select
-                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "rgb(37, 40, 77)", width: "100%" }}
+                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "#1c1f26", width: "100%" }}
                         id="sortBy"
                         value={sortValue}
                         onChange={handleSortByChange}
@@ -318,12 +318,12 @@ const SentimentBoard = ({ dispatch, date }) => {
     )
 
     const order = (
-        <div style={{ display: "flex", alignItems: "center", color: 'rgb(96, 98, 123)' }}>
+        <div style={{ display: "flex", alignItems: "center", color: '#A8B3CF' }}>
             Order:
             <div>
                 <FormControl sx={{ m: 1, width: 200 }}>
                     <Select
-                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "rgb(37, 40, 77)", width: "100%" }}
+                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "#1c1f26", width: "100%" }}
                         id="order"
                         value={orderValue}
                         onChange={handleOrderChange}

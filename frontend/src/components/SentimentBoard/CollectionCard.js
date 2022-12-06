@@ -45,7 +45,7 @@ const BorderLinearProgressRed = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -57,7 +57,7 @@ const BorderLinearProgressGreen = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -69,7 +69,7 @@ const BorderLinearProgressYellow = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -81,7 +81,7 @@ const BorderLinearProgressHype = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -107,7 +107,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
 
     return (
         <ThemeProvider theme={theme}>
-            <Card style={{ border: "none", borderRadius: '2em', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: 'rgb(37, 40, 77)', marginRight: "1vh", position: "relative" }}>
+            <Card style={{ border: "none", borderRadius: '2em', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: '#1c1f26', marginRight: "1vh", position: "relative" }}>
 
                 <CardActionArea>
                     <Tooltip title={descriptionToolTip} placement="bottom">
@@ -141,7 +141,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                         </Grid>}
 
 
-                        <Typography color="rgb(96, 98, 123)" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
+                        <Typography color="#A8B3CF" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
                             SENTIMENT ANALYSIS <Tooltip title={"Sentiment is how emotionally people think about a project in all aspects (art, utility, pump, future,etc.)"} placement="right">
                                 <HelpIcon style={{ width: 20, height: 15, marginBottom: "0.5%" }} />
                             </Tooltip>
@@ -190,7 +190,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                             </Grid>
                         </Grid>
 
-                        <Typography color="rgb(96, 98, 123)" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
+                        <Typography color="#A8B3CF" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
                             MOOD <Tooltip title={"Mood is the feeling of people/holders about the project overall"} placement="bottom">
                                 <HelpIcon style={{ width: 20, height: 15, marginBottom: "0.5%" }} />
                             </Tooltip>

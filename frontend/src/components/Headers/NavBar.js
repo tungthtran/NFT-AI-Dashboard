@@ -15,25 +15,13 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
     top: 0,
     position: 'sticky',
-    backgroundColor: 'rgb(23, 26, 50)',
-  },
-  activity: {
-    paddingLeft: '2vw',
-    height: '5vh',
-    color: 'rgb(96, 98, 123)'
-  },
-  contactUs: {
-    paddingTop: '6vh',
-    paddingLeft: '2vw',
-    paddingBottom: '1vh',
-    height: '5vh',
-    color: 'rgb(96, 98, 123)'
+    backgroundColor: '#0e1217',
   },
   navItem: {
     paddingLeft: '2vw',
     marginBottom: '1vh',
     height: '5vh',
-    color: 'rgb(96, 98, 123)',
+    color: '#A8B3CF',
     "&:hover": {
       color: "white"
     }
@@ -55,7 +43,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: 'white',
     },
     "&:hover": {
-      color: "rgb(96, 98, 123)"
+      color: "#A8B3CF"
     }
   },
   navItemIcon: {
@@ -70,14 +58,8 @@ const useStyles = makeStyles(theme => ({
     bottom: 20,
     left: 0,
     right: 0,
-    color: 'rgb(96, 98, 123)'
+    color: '#A8B3CF'
   },
-  logoutButArea: {
-    "&.MuiButton-root": {
-      background: "linear-gradient(180deg, #604ae5 0%, #813eee 100%)",
-      color: "white"
-    },
-  }
 }));
 
 function Navbar() {
@@ -143,7 +125,7 @@ function Navbar() {
   return (
     <>
     {<Box className={classes.root}>
-      <List>
+      <List style={{marginTop: "5vh"}}>
         {navList.map(nav => {
           if (nav['label'] === "Trending") {
             return (
@@ -201,7 +183,7 @@ function Navbar() {
       </List>
 
       <Box className={classes.butArea}>
-        <div>© 2022: Senior Project</div>
+        <div>© 2022: CWRU</div>
       </Box>
 
     </Box>}

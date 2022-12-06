@@ -48,7 +48,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
        const darkTheme = {
            chart: {
                layout: {
-                   backgroundColor: '#2B2B43',
+                   backgroundColor: '#1c1f26',
                    lineColor: '#2B2B43',
                    textColor: '#D9D9D9',
                },
