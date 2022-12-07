@@ -66,7 +66,6 @@ class MetricShock:
             return []
     
     def all_metric_change_for_one_collection_by_period(self, period):
-        # tz = timezone('EST')
         try:
             result = self.query_first(period)
             if result == []:

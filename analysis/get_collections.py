@@ -21,7 +21,6 @@ class Get_Collection:
         
         self.crawler = Crawler(max_tweets=max_tweets)
         self.processing = Processing(sentiment_tokenizer, emotion_tokenizer, spam_tokenizer, model_sentiment, model_emotion, model_spam)
-        self.kafka = KafkaShock()
 
     def analysis_on_collections(self, cols):
         data_cols = []
@@ -36,11 +35,6 @@ class Get_Collection:
         start = time.time()
         result = None
         try:
-            # if 'twitter' not in col:
-            #     col = {
-            #             **self.crawler.crawl_me_api_for_twitter(col['collectionSymbol']),
-            #             # 'tags': col['tags']
-            #     }
             stats = self.processing.processing_collection_without_writing(col)
             #Last point of the shock period
             last_point = self.time_series_analysis(stats)
@@ -51,7 +45,6 @@ class Get_Collection:
                 **last_point,
                 "shock": shock
             }
-            # self.kafka.stream_obj_to_kafka(result)
         except Exception as e:
             symbol = col['collectionSymbol']
             logging.error(f'Error durring handling collections {symbol}: {e}')

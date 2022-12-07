@@ -3,9 +3,7 @@ import datasets
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer
 import numpy as np
-import urllib.request
 import torch
-import csv
 import db
 from itertools import compress
 from utils import logging

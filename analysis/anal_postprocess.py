@@ -21,8 +21,6 @@ def process_all_collections_for_db(tag_to_data):
         }
       else:
         tag_set = name_map[name]['tags']
-        if db_tag == 'request-upcoming' and 'me-upcoming' in tag_set:
-          continue
         tag_set.add(db_tag)
 
   #convert tag set to list of tags
