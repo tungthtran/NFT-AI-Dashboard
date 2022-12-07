@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
-import { Grid, Tooltip } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import axios from "axios";
 import TradingViewChart from "../Graph/TradingViewChart";
-import { LinearProgress, linearProgressClasses } from '@mui/material';
 import { round } from '../../helper/utils';
 import InfoCard from '../Headers/InfoCard';
 import { AuthContext } from "../../App";
-import HelpIcon from '@mui/icons-material/Help';
 import { FaTwitter, FaDiscord, } from "react-icons/fa";
 import LanguageIcon from '@mui/icons-material/Language';
 import magicedenicon from '../../assets/magicedenicon.png';
 import IconButton from '@mui/material/IconButton';
 import CircleIcon from '@mui/icons-material/Circle';
 import Loading from '../Loading/Loading';
+import PieChart from '../Graph/PieChart';
+import MenuItem from '@mui/material/MenuItem';
+import { FormControl, Select } from '@material-ui/core';
 
 const CollectionDetails = (props) => {
 
@@ -36,41 +36,11 @@ const CollectionDetails = (props) => {
     const [twitter, setTwitter] = useState(null)
     const [discord, setDiscord] = useState(null)
 
-    const BorderLinearProgressRed = styled(LinearProgress)(({ theme }) => ({
-        height: 9,
-        borderRadius: 5,
-        [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: '#1c1f26',
-        },
-        [`& .${linearProgressClasses.bar}`]: {
-            borderRadius: 5,
-            backgroundColor: theme.palette.mode === 'light' ? 'rgb(240, 131, 131)' : 'yellow',
-        },
-    }));
+    const [chartType, setChartType] = useState("Sentiment");
 
-    const BorderLinearProgressGreen = styled(LinearProgress)(({ theme }) => ({
-        height: 9,
-        borderRadius: 5,
-        [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: '#1c1f26',
-        },
-        [`& .${linearProgressClasses.bar}`]: {
-            borderRadius: 5,
-            backgroundColor: theme.palette.mode === 'light' ? 'rgb(132, 235, 176)' : 'yellow',
-        },
-    }));
-
-    const BorderLinearProgressYellow = styled(LinearProgress)(({ theme }) => ({
-        height: 9,
-        borderRadius: 5,
-        [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: '#1c1f26',
-        },
-        [`& .${linearProgressClasses.bar}`]: {
-            borderRadius: 5,
-            backgroundColor: theme.palette.mode === 'light' ? 'rgb(250, 224, 145)' : 'yellow',
-        },
-    }));
+    const handleChangeType = (event) => {
+        setChartType(event.target.value);
+    }
 
     const getTwitterTimeSeriesData = async (name) => {
         const url = process.env.REACT_APP_BACKEND + "/load-collection-time-series"
@@ -82,7 +52,6 @@ const CollectionDetails = (props) => {
         if (name) {
             getTwitterTimeSeriesData(name);
         }
-
     }, [name])
 
     useEffect(() => {
@@ -92,13 +61,13 @@ const CollectionDetails = (props) => {
 
             let collection = collections.find(c => c.name === name);
 
-            let negData = (collection?.twitter_sent_avg_negative * 100).toFixed(0);
-            let neuData = (collection?.twitter_sent_avg_neutral * 100).toFixed(0);
-            let posData = (collection?.twitter_sent_avg_positive * 100).toFixed(0);
+            let negData = (collection?.twitter_sent_avg_negative * 100);
+            let neuData = (collection?.twitter_sent_avg_neutral * 100);
+            let posData = (collection?.twitter_sent_avg_positive * 100);
 
-            setNeg(negData)
-            setNeu(neuData)
-            setPos(posData)
+            setPos(posData);
+            setNeu(neuData);
+            setNeg(negData);
 
             setCollectionDescription(collection?.description)
 
@@ -107,9 +76,9 @@ const CollectionDetails = (props) => {
             let twitter_emo_avg_optimism = collection?.twitter_emo_avg_optimism
             let twitter_emo_avg_sadness = collection?.twitter_emo_avg_sadness
 
-            let emotion_posData = ((twitter_emo_avg_joy + twitter_emo_avg_optimism) * 100).toFixed(0)
-            twitter_emo_avg_anger = (twitter_emo_avg_anger * 100).toFixed(0)
-            twitter_emo_avg_sadness = (twitter_emo_avg_sadness * 100).toFixed(0)
+            let emotion_posData = ((twitter_emo_avg_joy + twitter_emo_avg_optimism) * 100);
+            twitter_emo_avg_anger = (twitter_emo_avg_anger * 100);
+            twitter_emo_avg_sadness = (twitter_emo_avg_sadness * 100);
 
             setEmotion_pos(emotion_posData)
             setEmotion_sadness(twitter_emo_avg_sadness)
@@ -137,7 +106,7 @@ const CollectionDetails = (props) => {
                 <Grid xs={3} item>
                     <img style={{ width: "10vw", height: "auto", borderRadius: "2em" }} src={img} alt="" />
                 </Grid>
-                <Grid xs={4} item style={{marginRight: "4vw"}}>
+                <Grid xs={4} item style={{ marginRight: "4vw" }}>
                     <div style={{ fontSize: "35px", marginBottom: "1vh" }}>{name}</div>
                     <div style={{ fontSize: "22px", color: "grey", marginBottom: "1vh" }}>{collectionDescription}</div>
                     <div>
@@ -164,7 +133,7 @@ const CollectionDetails = (props) => {
                         followers={latestValue(timeSeries.follower)}
                         shock={shock}
                     />}
-                </Grid>     
+                </Grid>
                 <Grid xs={12} item>
                     {timeSeries === null && <Loading />}
                     {timeSeries !== undefined && timeSeries !== null && shock !== null && Object.keys(timeSeries).length !== 0 && <Grid style={{ marginLeft: "2vw" }} container>
@@ -190,106 +159,24 @@ const CollectionDetails = (props) => {
                             </Grid>
 
                             <Grid xs={4} item>
-                                <div style={{ fontSize: "1.5vw", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>Sentiment analysis
-                                    <Tooltip title={"Sentiment is how emotionally people think about a project in all aspects (art, utility, pump, future,etc.)"} placement="bottom">
-                                        <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
-                                    </Tooltip>
-                                </div>
-                                <div style={{ width: "20vw" }}>
-                                    <Grid>
-                                        <Grid container alignItems="center">
-                                            <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                Positive:
-                                            </Grid>
-
-                                            <Grid xs item>
-                                                <BorderLinearProgressGreen variant="determinate" value={pos} />
-                                            </Grid>
-
-                                            <Grid style={{ color: "rgb(132, 235, 176)", textAlign: "right" }} xs item>
-                                                {pos}%
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid container alignItems="center">
-                                            <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                Neutral:
-                                            </Grid>
-
-                                            <Grid xs item>
-                                                <BorderLinearProgressYellow variant="determinate" value={neu} />
-                                            </Grid>
-
-                                            <Grid style={{ color: "rgb(250, 224, 145)", textAlign: "right" }} xs item>
-                                                {neu}%
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid container alignItems="center">
-                                            <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                Negative:
-                                            </Grid>
-
-                                            <Grid xs item>
-                                                <BorderLinearProgressRed variant="determinate" value={neg} />
-                                            </Grid>
-
-                                            <Grid style={{ color: "rgb(240, 131, 131)", textAlign: "right" }} xs item>
-                                                {neg}%
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </div>
-
-                                <div style={{ fontSize: "1.5vw", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>
-                                    Mood
-                                    <Tooltip title={"Mood is the feeling of people/holders about the project overall"} placement="bottom">
-                                        <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
-                                    </Tooltip>
-                                </div>
-
-                                <div style={{ width: "20vw" }}>
-                                    <Grid container spacing={1} alignItems="center">
-                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                            🤗 Happy:
-                                        </Grid>
-
-                                        <Grid xs item>
-                                            <BorderLinearProgressGreen variant="determinate" value={emotion_pos} />
-                                        </Grid>
-
-                                        <Grid style={{ color: "rgb(132, 235, 176)", textAlign: "right" }} xs item>
-                                            {emotion_pos}%
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container spacing={1} alignItems="center">
-                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                            😢 Sad:
-                                        </Grid>
-
-                                        <Grid xs item>
-                                            <BorderLinearProgressYellow variant="determinate" value={emotion_sadness} />
-                                        </Grid>
-
-                                        <Grid style={{ color: "rgb(250, 224, 145)", textAlign: "right" }} xs item>
-                                            {emotion_sadness}%
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container spacing={1} alignItems="center">
-                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                            🤬 Angry:
-                                        </Grid>
-
-                                        <Grid xs item>
-                                            <BorderLinearProgressRed variant="determinate" value={emotion_anger} />
-                                        </Grid>
-
-                                        <Grid style={{ color: "rgb(240, 131, 131)", textAlign: "right" }} xs item>
-                                            {emotion_anger}%
-                                        </Grid>
-                                    </Grid>
+                                {chartType === "Sentiment" ? <PieChart isSentiment={true} positive={pos} neutral={neu} negative={neg} /> :
+                                    <PieChart isSentiment={false} positive={emotion_pos} neutral={emotion_sadness} negative={emotion_anger} />
+                                }
+                                <div style={{ display: "flex", alignItems: "center", color: '#A8B3CF' }}>
+                                    Chart type:
+                                    <div>
+                                        <FormControl sx={{ m: 1, width: 200 }}>
+                                            <Select
+                                                style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "#1c1f26", width: "100%" }}
+                                                id="chartType"
+                                                value={chartType}
+                                                onChange={handleChangeType}
+                                            >
+                                                <MenuItem key={1} value={"Sentiment"}>Sentimental Analysis</MenuItem>
+                                                <MenuItem key={2} value={"Mood"}>Mood</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </div>
                                 </div>
                             </Grid>
                         </Grid>
