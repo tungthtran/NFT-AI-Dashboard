@@ -83,13 +83,10 @@ class Anal:
         }
         data.append(json)
       
-      # data = [{k:v} for k, v in zip(tweets_list, scores) ]
       try:
         db.get_collection("tweets_score").insert_many(data, ordered=False)
       except:
         logging.warn("Just Duplicates")
-      
-      # scam_tweets = get_scam_tweet(tweets_list, scam_label)
 
       avg_anger = np.mean(emotion_scores[:, 0])
       std_anger = np.std(emotion_scores[:, 0])

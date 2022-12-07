@@ -4,18 +4,13 @@ import anal_postprocess as postprocess
 import pprint
 import db
 tag_map = {
-            # 'me-upcoming':'me-upcoming', 
-            # 'new_collections': 'new-collections', 
             '1h': 'popular-collections-1h', 
             '1d': 'popular-collections-1day', 
             '7d': 'popular-collections-7days', 
             '30d': 'popular-collections-30days',
-            'request-upcoming': 'request-upcoming',
-            'request-me': 'request-me'
             }
 
 tags = [
-  # 'new_collections',
   '1h', '1d', '7d', '30d']
 
 collection_crawler = Crawler()
@@ -46,11 +41,9 @@ if __name__ == '__main__':
               **request_upcoming,
               **request_me
           }
-        #   pprint.pprint(all_collections)
           all_cols_for_db = postprocess.process_all_collections_for_db(all_collections)
           
           queue.lpush_many(NFT, all_cols_for_db)
-          # queue.lpush_one(NFT, dummy_json)
           queue.expire(NFT)
           print(f"Key {NFT} expires in {queue.ttl(NFT)}")
           print(f'Enqueues {len(all_cols_for_db)} collections to (Key: {NFT}) redis queue!')

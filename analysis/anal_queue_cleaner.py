@@ -10,14 +10,11 @@ NFT = 'nft'
 ANAL = 'anal'
 
 tag_map = {
-            'me-upcoming':'me-upcoming', 
             'new_collections': 'new-collections', 
             '1h': 'popular-collections-1h', 
             '1d': 'popular-collections-1day', 
             '7d': 'popular-collections-7days', 
             '30d': 'popular-collections-30days',
-            'request-upcoming': 'request-upcoming',
-            'request-me': 'request-me'
             }
 
 tags = ['new_collections', '1h', '1d', '7d', '30d']
