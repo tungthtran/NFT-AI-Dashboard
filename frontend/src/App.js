@@ -5,7 +5,6 @@ import 'antd/dist/antd.css';
 import Navbar from "./components/Headers/NavBar";
 import { Box, makeStyles } from '@material-ui/core';
 import axios from "axios";
-import SentimentBoard from "./components/SentimentBoard/SentimentBoard"
 import AllCollection from "./pages/AllCollection";
 import CollectionDetails from "./components/CollectionDetails/CollectionDetails";
 import Header from "./components/Headers/Header"
@@ -55,7 +54,7 @@ const reducer = (state, action) => {
 const useStyles = makeStyles(theme => ({
   content: {
     width: '100%',
-    padding: '35px 50px 0px',
+    padding: '35px 50px 5px',
   }
 }));
 
@@ -141,25 +140,10 @@ function App() {
       <div className="App">
         <Router> 
           <Box display="flex">
-            <Navbar />
+            <Navbar/>
             <Box className={classes.content}>
               <Header />
               <Switch>
-                <Route path="/new-collections">
-                  <SentimentBoard dispatch={dispatch} date="new-collections" /> 
-                </Route>
-                <Route path="/1h">
-                  <SentimentBoard dispatch={dispatch} date="1h" />
-                </Route>
-                <Route path="/1day">
-                  <SentimentBoard dispatch={dispatch} date="1day" />
-                </Route>
-                <Route path="/7days">
-                  <SentimentBoard dispatch={dispatch} date="7days" />
-                </Route>
-                <Route path="/alltrending">
-                  <SentimentBoard dispatch={dispatch} date="all" />
-                </Route>
                 <Route path="/details/:collectionName" render={(props) => {return <CollectionDetails {...props} key={window.location.pathname} />}}>
                 </Route>
                 <Route path="/">

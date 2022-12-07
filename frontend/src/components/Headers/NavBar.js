@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import "../../css/Header.css";
 import { Link } from 'react-router-dom';
 import { Box, List, ListItem, ListItemIcon, makeStyles } from '@material-ui/core';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import HomeIcon from '@mui/icons-material/Home';
 
 const useStyles = makeStyles(theme => ({
@@ -79,11 +78,6 @@ function Navbar() {
       label: 'Home',
       path: '/all',
       icon: (<HomeIcon />),
-    },
-    {
-      label: 'Trending',
-      path: '/alltrending',
-      icon: (<TrendingUpIcon />)
     },
   ];
 

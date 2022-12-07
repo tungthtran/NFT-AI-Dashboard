@@ -14,7 +14,6 @@ import magicedenicon from '../../assets/magicedenicon.png';
 import IconButton from '@mui/material/IconButton';
 import CircleIcon from '@mui/icons-material/Circle';
 import Loading from '../Loading/Loading';
-import "../../css/Chat.css";
 
 const CollectionDetails = (props) => {
 
@@ -132,18 +131,16 @@ const CollectionDetails = (props) => {
     }
 
     return (
-        <div style={{ color: "white" }}>
+        <div style={{ color: "white", marginBottom: "7vh" }}>
 
-            <Grid container>
-                <Grid xs={12} item>
-
-                    <img style={{ width: "10vw", height: "auto", borderRadius: "2em", marginBottom: "2vh" }} src={img} alt="" />
-
+            <Grid spacing={1} container>
+                <Grid xs={3} item>
+                    <img style={{ width: "10vw", height: "auto", borderRadius: "2em" }} src={img} alt="" />
+                </Grid>
+                <Grid xs={4} item style={{marginRight: "4vw"}}>
                     <div style={{ fontSize: "35px", marginBottom: "1vh" }}>{name}</div>
-
-                    <div style={{ fontSize: "25px", color: "grey", marginBottom: "1vh" }}>{collectionDescription}</div>
-
-                    <div style={{ marginBottom: "2vh" }}>
+                    <div style={{ fontSize: "22px", color: "grey", marginBottom: "1vh" }}>{collectionDescription}</div>
+                    <div>
                         {me && <IconButton onClick={() => window.open(me, "_blank")} color="secondary">
                             <img alt="ME" src={magicedenicon} style={{ width: "50px" }} />
                         </IconButton>}
@@ -157,142 +154,145 @@ const CollectionDetails = (props) => {
                             <FaDiscord style={{ width: "50px" }} />
                         </IconButton>}
                     </div>
-
+                </Grid>
+                <Grid xs={4} item>
+                    {timeSeries !== undefined && timeSeries !== null && shock !== null && Object.keys(timeSeries).length !== 0 && <InfoCard
+                        floorPrice={round(latestValue(timeSeries.floorPrice))}
+                        volume24h={round(latestValue(timeSeries.volume24h))}
+                        volumeAll={round(latestValue(timeSeries.volumeAll))}
+                        listCount={latestValue(timeSeries.listedCount)}
+                        followers={latestValue(timeSeries.follower)}
+                        shock={shock}
+                    />}
+                </Grid>     
+                <Grid xs={12} item>
                     {timeSeries === null && <Loading />}
-                    {timeSeries !== undefined && timeSeries !== null && shock !== null && Object.keys(timeSeries).length !== 0 && <Grid style={{ marginLeft: "2vw", marginBottom: "5vh" }} container>
-                        {<InfoCard
-                            floorPrice={round(latestValue(timeSeries.floorPrice))}
-                            volume24h={round(latestValue(timeSeries.volume24h))}
-                            volumeAll={round(latestValue(timeSeries.volumeAll))}
-                            listCount={latestValue(timeSeries.listedCount)}
-                            followers={latestValue(timeSeries.follower)}
-                            shock={shock}
-                        />}
-                            <Grid container>
-                                <Grid xs={8} item>
-                                    <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count" isNormalized={true} />
+                    {timeSeries !== undefined && timeSeries !== null && shock !== null && Object.keys(timeSeries).length !== 0 && <Grid style={{ marginLeft: "2vw" }} container>
+                        <Grid container>
+                            <Grid xs={8} item>
+                                <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count" isNormalized={true} />
 
-                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgba(32, 226, 47, 1)", marginRight: "0.25vw" }} />
-                                            <div>Sentiment</div>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgba(33, 150, 243, 1)", marginRight: "0.25vw" }} />
-                                            <div>Floor price</div>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "#9932cc", marginRight: "0.25vw" }} />
-                                            <div>Listed Count</div>
-                                        </div>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        <CircleIcon style={{ color: "rgba(32, 226, 47, 1)", marginRight: "0.25vw" }} />
+                                        <div>Sentiment</div>
                                     </div>
-
-                                </Grid>
-
-                                <Grid xs={4} item>
-                                    <div style={{ fontSize: "1.5vw", fontFamily: "BumbleGum", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>Sentiment analysis
-                                        <Tooltip title={"Sentiment is how emotionally people think about a project in all aspects (art, utility, pump, future,etc.)"} placement="bottom">
-                                            <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
-                                        </Tooltip>
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        <CircleIcon style={{ color: "rgba(33, 150, 243, 1)", marginRight: "0.25vw" }} />
+                                        <div>Floor price</div>
                                     </div>
-                                    <div style={{ width: "20vw" }}>
-                                        <Grid>
-                                            <Grid container alignItems="center">
-                                                <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                    Positive:
-                                                </Grid>
-
-                                                <Grid xs item>
-                                                    <BorderLinearProgressGreen variant="determinate" value={pos} />
-                                                </Grid>
-
-                                                <Grid style={{ color: "rgb(132, 235, 176)", textAlign: "right" }} xs item>
-                                                    {pos}%
-                                                </Grid>
-                                            </Grid>
-
-                                            <Grid container alignItems="center">
-                                                <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                    Neutral:
-                                                </Grid>
-
-                                                <Grid xs item>
-                                                    <BorderLinearProgressYellow variant="determinate" value={neu} />
-                                                </Grid>
-
-                                                <Grid style={{ color: "rgb(250, 224, 145)", textAlign: "right" }} xs item>
-                                                    {neu}%
-                                                </Grid>
-                                            </Grid>
-
-                                            <Grid container alignItems="center">
-                                                <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                    Negative:
-                                                </Grid>
-
-                                                <Grid xs item>
-                                                    <BorderLinearProgressRed variant="determinate" value={neg} />
-                                                </Grid>
-
-                                                <Grid style={{ color: "rgb(240, 131, 131)", textAlign: "right" }} xs item>
-                                                    {neg}%
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        <CircleIcon style={{ color: "#9932cc", marginRight: "0.25vw" }} />
+                                        <div>Listed Count</div>
                                     </div>
+                                </div>
 
-                                    <div style={{ fontSize: "1.5vw", fontFamily: "BumbleGum", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>
-                                        Mood
-                                        <Tooltip title={"Mood is the feeling of people/holders about the project overall"} placement="bottom">
-                                            <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
-                                        </Tooltip>
-                                    </div>
+                            </Grid>
 
-                                    <div style={{ width: "20vw" }}>
-                                        <Grid container spacing={1} alignItems="center">
+                            <Grid xs={4} item>
+                                <div style={{ fontSize: "1.5vw", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>Sentiment analysis
+                                    <Tooltip title={"Sentiment is how emotionally people think about a project in all aspects (art, utility, pump, future,etc.)"} placement="bottom">
+                                        <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
+                                    </Tooltip>
+                                </div>
+                                <div style={{ width: "20vw" }}>
+                                    <Grid>
+                                        <Grid container alignItems="center">
                                             <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                🤗 Happy:
+                                                Positive:
                                             </Grid>
 
                                             <Grid xs item>
-                                                <BorderLinearProgressGreen variant="determinate" value={emotion_pos} />
+                                                <BorderLinearProgressGreen variant="determinate" value={pos} />
                                             </Grid>
 
                                             <Grid style={{ color: "rgb(132, 235, 176)", textAlign: "right" }} xs item>
-                                                {emotion_pos}%
+                                                {pos}%
                                             </Grid>
                                         </Grid>
 
-                                        <Grid container spacing={1} alignItems="center">
+                                        <Grid container alignItems="center">
                                             <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                😢 Sad:
+                                                Neutral:
                                             </Grid>
 
                                             <Grid xs item>
-                                                <BorderLinearProgressYellow variant="determinate" value={emotion_sadness} />
+                                                <BorderLinearProgressYellow variant="determinate" value={neu} />
                                             </Grid>
 
                                             <Grid style={{ color: "rgb(250, 224, 145)", textAlign: "right" }} xs item>
-                                                {emotion_sadness}%
+                                                {neu}%
                                             </Grid>
                                         </Grid>
 
-                                        <Grid container spacing={1} alignItems="center">
+                                        <Grid container alignItems="center">
                                             <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                                🤬 Angry:
+                                                Negative:
                                             </Grid>
 
                                             <Grid xs item>
-                                                <BorderLinearProgressRed variant="determinate" value={emotion_anger} />
+                                                <BorderLinearProgressRed variant="determinate" value={neg} />
                                             </Grid>
 
                                             <Grid style={{ color: "rgb(240, 131, 131)", textAlign: "right" }} xs item>
-                                                {emotion_anger}%
+                                                {neg}%
                                             </Grid>
                                         </Grid>
-                                    </div>
-                                </Grid>
+                                    </Grid>
+                                </div>
+
+                                <div style={{ fontSize: "1.5vw", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>
+                                    Mood
+                                    <Tooltip title={"Mood is the feeling of people/holders about the project overall"} placement="bottom">
+                                        <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
+                                    </Tooltip>
+                                </div>
+
+                                <div style={{ width: "20vw" }}>
+                                    <Grid container spacing={1} alignItems="center">
+                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
+                                            🤗 Happy:
+                                        </Grid>
+
+                                        <Grid xs item>
+                                            <BorderLinearProgressGreen variant="determinate" value={emotion_pos} />
+                                        </Grid>
+
+                                        <Grid style={{ color: "rgb(132, 235, 176)", textAlign: "right" }} xs item>
+                                            {emotion_pos}%
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid container spacing={1} alignItems="center">
+                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
+                                            😢 Sad:
+                                        </Grid>
+
+                                        <Grid xs item>
+                                            <BorderLinearProgressYellow variant="determinate" value={emotion_sadness} />
+                                        </Grid>
+
+                                        <Grid style={{ color: "rgb(250, 224, 145)", textAlign: "right" }} xs item>
+                                            {emotion_sadness}%
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid container spacing={1} alignItems="center">
+                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
+                                            🤬 Angry:
+                                        </Grid>
+
+                                        <Grid xs item>
+                                            <BorderLinearProgressRed variant="determinate" value={emotion_anger} />
+                                        </Grid>
+
+                                        <Grid style={{ color: "rgb(240, 131, 131)", textAlign: "right" }} xs item>
+                                            {emotion_anger}%
+                                        </Grid>
+                                    </Grid>
+                                </div>
                             </Grid>
+                        </Grid>
                     </Grid>}
                 </Grid>
             </Grid>

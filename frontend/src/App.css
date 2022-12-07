@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   background-color: #0e1217;
-  font-family: "BumbleGum";
 }
 
 html,body{
@@ -17,10 +16,6 @@ html,body{
   color: white;
   overflow: auto;
   font-weight: bold;
-}
-
-.MuiTypography-root {
-  font-family: 'BumbleGum' !important;
 }
 
 .MuiTablePagination-root {
@@ -46,9 +41,4 @@ html,body{
 .MuiTableCell-root {
   border-bottom: none !important;
   color: white !important;
-  font-family: "BumbleGum" !important;
-}
-
-.MuiSelect-root {
-  font-family: "BumbleGum" !important;
 }

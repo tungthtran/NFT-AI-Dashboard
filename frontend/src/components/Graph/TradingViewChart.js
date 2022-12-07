@@ -220,7 +220,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
  
    return (
        <div style={{ marginBottom: "4vh" }}>
-           <div style={{ fontSize: "1.5vw", fontFamily: "BumbleGum", marginBottom: "4vh", float: "left" }}>{generateTitle()}</div>
+           <div style={{ fontSize: "1.5vw", marginBottom: "4vh", float: "left" }}>{generateTitle()}</div>
            <div ref={ref} style={{ position: "relative" }}/>
        </div>
    );

@@ -4,19 +4,14 @@ import tableIcons from "../components/MaterialTableIcons";
 import { AuthContext } from "../App";
 import "../css/Dashboard.css"
 import { round } from '../helper/utils';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import { useHistory } from "react-router-dom";
 import solanaImage from "../assets/solana.jpeg"
-import HelpIcon from '@mui/icons-material/Help';
-import { Tooltip } from '@mui/material';
 
 const AllCollection = () => {
 
     const [data, setData] = useState([])
 
-    const [time, setTime] = useState("1d");
+    const time = "1d";
 
     const { state } = React.useContext(AuthContext);
 
@@ -46,10 +41,6 @@ const AllCollection = () => {
         }
         return uniqueCol
     }
-
-    const handleChangeTime = (event, newValue) => {
-        setTime(newValue);
-    };
 
     const cleanShock = (collection) => {
         const nullShock = {
@@ -147,9 +138,7 @@ const AllCollection = () => {
                 </div>,
         },
         {
-            title: <div style={{ display: "flex", alignItems: "center" }}>Chain <Tooltip title={"Ethereum chain coming soon"} placement="bottom">
-                <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "5%" }} />
-            </Tooltip></div>,
+            title: <div style={{ display: "flex", alignItems: "center" }}>Chain</div>,
             align: "right",
             width: "5%",
             render: (rowData) => <img src={solanaImage} alt="solana" style={{ width: '1vw', height: '1vw', borderRadius: "50%" }} />
@@ -160,7 +149,7 @@ const AllCollection = () => {
             render: (rowData) => { return <div>◎ {round(rowData.floorPrice)}</div> }
         },
         {
-            title: `Floor Price % (${time})`,
+            title: `Floor Price %`,
             align: "right",
             customSort: (a, b) => parseFloat(generateFpShock(a)) - parseFloat(generateFpShock(b)),
             render: (rowData) => { return <div style={{ color: generateColor(generateFpShock(rowData)) }}>{generateFpShock(rowData)} %</div> }
@@ -170,7 +159,7 @@ const AllCollection = () => {
             align: "right",
         },
         {
-            title: `Listed Count % (${time})`,
+            title: `Listed Count %`,
             align: "right",
             customSort: (a, b) => parseFloat(generateListedCountShock(a)) - parseFloat(generateListedCountShock(b)),
             render: (rowData) => { return <div style={{ color: generateColor(generateListedCountShock(rowData)) }}>{generateListedCountShock(rowData)} %</div> }
@@ -181,7 +170,7 @@ const AllCollection = () => {
             render: (rowData) => { return <div>◎ {round(rowData.volume24h)}</div> }
         },
         {
-            title: `Volume % (${time})`,
+            title: `Volume %`,
             align: "right",
             customSort: (a, b) => parseFloat(generateVolumeShock(a)) - parseFloat(generateVolumeShock(b)),
             render: (rowData) => { return <div style={{ color: generateColor(generateVolumeShock(rowData)) }}>{round(generateVolumeShock(rowData))} %</div> }
@@ -191,28 +180,8 @@ const AllCollection = () => {
 
     return (
         <div>
-            <h1 className="dashboard_title">Home</h1>
-
-            <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                <div style={{color: "#A8B3CF", marginRight: "1vw"}}>Time: </div>
-                <Box sx={{ width: '100%' }}>
-                    <Tabs
-                        value={time}
-                        onChange={handleChangeTime}
-                        textColor="secondary"
-                        indicatorColor="primary"
-                        aria-label="Date Tab"
-                    >
-                        <Tab value="1h" label={<span style={{ color: 'white' }}>1h</span>} />
-                        <Tab value="6h" label={<span style={{ color: 'white' }}>6h</span>} />
-                        <Tab value="1d" label={<span style={{ color: 'white' }}>1d</span>} />
-                        <Tab value="7d" label={<span style={{ color: 'white' }}>7d</span>} />
-                    </Tabs>
-                </Box>
-
-            </div>
-
-            
+            <h1 className="dashboard_title">Popular Collections</h1>
+        
             <MaterialTable
                 style={{ color: "white", backgroundColor: "#1c1f26", border: "none", borderRadius: "2em", marginBottom: "10vh" }}
                 isLoading={data.length === 0}
@@ -227,7 +196,7 @@ const AllCollection = () => {
                     showTitle: false,
                     emptyRowsWhenPaging: false,
                     pageSizeOptions: [20, 50, 100],
-                    headerStyle: { backgroundColor: "#1c1f26", fontFamily: "BumbleGum", fontSize: "1vw" },
+                    headerStyle: { backgroundColor: "#1c1f26", fontSize: "1vw" },
                     searchFieldStyle: { color: "white", backgroundColor: "#1c1f26", border: "none", borderRadius: "2em", width: "100%" }
                 }}
                 localization={{
