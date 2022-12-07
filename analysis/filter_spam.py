@@ -29,9 +29,6 @@ def filter_spam(tweets_dict, tokenizer, model):
   return non_spam_tweets
 
 def get_spam_tweet(tweets_list, tokenizer, model):
-    # MODEL = f"mrm8488/bert-tiny-finetuned-sms-spam-detection"
-    # tokenizer = AutoTokenizer.from_pretrained(MODEL)
-    # PT
     model = model.to("cuda")
     
     return predict_spam_tweet(tokenizer, tweets_list, model)

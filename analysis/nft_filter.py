@@ -7,7 +7,6 @@ from transformers.pipelines.pt_utils import KeyDataset
 import torch
 
 
-
 class NFT_Filter:
     def __init__(self, tokenizer, model):
         self.device = 0 if torch.cuda.is_available() else -1

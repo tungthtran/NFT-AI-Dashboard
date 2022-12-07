@@ -2,7 +2,6 @@ from utils import logging
 import anal
 from crawler import Crawler
 import db
-# from get_collections import Get_Collection
 from anal import Anal
 
 class Processing:
