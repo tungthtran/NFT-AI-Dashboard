@@ -7,8 +7,6 @@ from pytz import timezone
 from crawler import Crawler
 from utils import logging
 from metric_shock import MetricShock
-import discord_member_count as discord
-from kafka_shock import KafkaShock
 
 ONE_BIL = 1000000000
 class Get_Collection:
@@ -84,7 +82,6 @@ class Get_Collection:
         floorPrice = (floorPrice / ONE_BIL) if floorPrice > 0 else floorPrice
         volume24h = (volume24h / ONE_BIL) if volume24h > 0 else volume24h
         volumeAll = (volumeAll / ONE_BIL) if volumeAll > 0 else volumeAll
-        # discordMember = discord.get_member_count(collection_name)
 
         instant = {
             **result,
@@ -93,115 +90,16 @@ class Get_Collection:
             'volume24h': volume24h,
             'volumeAll': volumeAll,
             'listedCount': listedCount,
-            # 'discordMember': discordMember
         }
 
         if '_id' in instant: del instant['_id']
         try:
             db.get_collection('time_series').insert_one(instant)
-
-            # beta testing cloud db
-            # db.get_collection('time_series', cloud=True).insert_one(instant)
         except Exception as e:
             logging.error(f"{e} in time_series_analysis")
 
         return instant
 
-    def get_collections_from_sol(self):
-        data_cols = []
-        start = time.time()
-
-        logging.info(f'Start getting upcoming collections from the Solanalysis!')
-        query = """query GetUpcomingProjectsQuery($conditions: [GetUpcomingProjectsCondition!], $order_by: [OrderConfig!], $pagination_info: PaginationConfig) {
-            getUpcomingProjectsRaw(
-            conditions: $conditions
-            order_by: $order_by
-            pagination_info: $pagination_info
-            ) {
-                upcoming_projects {
-                project_name
-                protocol
-                twitter
-                discord
-                website
-                display_name
-                supply
-                description
-                launch_timestamp
-                launch_date
-                mint_site
-                img_url
-                price
-                is_moonshot
-                likesCount
-                user_likes {
-                    user {
-                    twitter
-                    tags {
-                        tag
-                        __typename
-                    }
-                    __typename
-                    }
-                    __typename
-                    }
-                    __typename
-                }
-                __typename
-            }
-        }"""
-
-        variables = {
-            "conditions": [
-                {
-                    "user_timestamp": {
-                        "timestamp": int(time.time() * 1000),
-                        "locale": "en-US",
-                        "timezone": "America/New_York",
-                        "operation": "GREATER_THAN_OR_EQUAL_TO"
-                    }
-                }
-            ],
-            "order_by": {
-                "field_name": "likesCount",
-                "sort_order": "DESC"
-            },
-            "pagination_info": {
-                "page_size": 5,
-                "page_number": 1
-            }
-        }
-
-        headers = {'Content-Type': 'application/json'}
-
-
-        url = f"https://beta.api.solanalysis.com/graphql"
-
-        r = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
-        cols = r.json()['data']['getUpcomingProjectsRaw']['upcoming_projects']
-
-        cols = [
-            {
-            'name': col['display_name'],
-            'symbol': col['project_name'],
-            'image': col['img_url'],
-            'tag': 'upcoming',
-            **col,
-            '__v': 0
-        } for col in cols]
-
-        logging.info(f'Start analysis on upcoming Solanalysis!')
-
-        data_cols = self.analysis_on_collections(cols)
-
-        end = time.time()
-
-        logging.info(f'Finish analysis on upcoming Solanalysis!')
-
-        
-        logging.info(f'Total runtime for {len(cols)} collections from Sol database: {end - start} total')
-
-        return data_cols
 
     def get_all_collections(self, cols):
         start = time.time()

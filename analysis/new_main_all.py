@@ -5,9 +5,8 @@ import time
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer
 import pprint
+
 tag_map = {
-  # 'me-upcoming':'me-upcoming', 
-  #           'new_collections': 'new-collections', 
             '1h': 'popular-collections-1h', 
             '1d': 'popular-collections-1day', 
             '7d': 'popular-collections-7days', 
@@ -15,11 +14,10 @@ tag_map = {
             }
 
 tags = [
-  # 'new_collections', 
 '1h', 
-# '1d', 
-# '7d', 
-# '30d'
+'1d', 
+'7d', 
+'30d'
 ]
 pp = pprint.PrettyPrinter()
 def process_all_collections_for_db(tag_to_data):
@@ -86,15 +84,11 @@ if __name__ == '__main__':
                                             model_spam,
                                             50)
       crawler = Crawler()
-
-      # data_cols = collection_analysis.get_collections_from_sol()
-      # db.drop_then_insert(data_cols)
       
       all_me_collections_by_tags = crawler.get_all_me_collections_by_tags(tags)
-      # upcoming_collections = crawler.get_top_upcoming_collection()
+      
       all_collections = {
         **all_me_collections_by_tags,
-        # **upcoming_collections,
       }
 
       all_cols_for_db = process_all_collections_for_db(all_collections)
@@ -107,14 +101,6 @@ if __name__ == '__main__':
       for tag, nfts in nfts_by_tag.items():
         data_cols_by_tag = nfts_by_tag[tag]
         db.drop_then_insert(data_cols_by_tag, tag)
-      
-      #-------------------------------------------
-
-      #hand-add
-      # hand_tags = ['request-me', 'request-upcoming']
-      # for hand_tag in hand_tags:
-      #   data_cols_hand_tag = (collection_analysis.get_collections_from_db(hand_tag))
-      #   db.drop_then_insert(data_cols_hand_tag, hand_tag)
 
       logging.info("Finish the sentiment LOOP!")
       logging.info(f'TOTAL TIME {(time.time() - start) / 60}')

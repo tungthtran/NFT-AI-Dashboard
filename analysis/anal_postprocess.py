@@ -1,4 +1,3 @@
-from kafka_shock import KafkaShock
 tag_map = {
             'new_collections': 'new-collections', 
             '1h':'popular-collections-1h', 
@@ -28,7 +27,6 @@ def process_all_collections_for_db(tag_to_data):
 
   #convert tag set to list of tags
   for nft_info in name_map.values():
-    # print(nft_info['tags'])
     nft_info['tags'] = list(nft_info['tags'])
   
   return list(name_map.values())
@@ -48,8 +46,3 @@ def map_nfts_to_tag(all_nfts_stat, tags):
       nft_map[tag].append(col_info)
   
   return nft_map
-
-def send_shock_to_discord(nfts):
-    kafka = KafkaShock()
-    for nft in nfts:
-        kafka.stream_obj_to_kafka(nft)
