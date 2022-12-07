@@ -45,7 +45,7 @@ const BorderLinearProgressRed = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -57,7 +57,7 @@ const BorderLinearProgressGreen = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -69,7 +69,7 @@ const BorderLinearProgressYellow = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -81,7 +81,7 @@ const BorderLinearProgressHype = styled(LinearProgress)(({ theme }) => ({
     height: 9,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor: 'rgb(37, 40, 77)',
+        backgroundColor: '#1c1f26',
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -90,7 +90,7 @@ const BorderLinearProgressHype = styled(LinearProgress)(({ theme }) => ({
 }));
 
 export default function CollectionCard({ img, name, description, emotion_pos, emotion_anger, emotion_sadness, url,
-    neg, neu, pos, hype, twitter, discord, me, price, supply, website, launch_date, tag, hunting, shock, dispatch, db_tag }) {
+    neg, neu, pos, hype, twitter, discord, me, price, supply, website }) {
     const descriptionToolTip = <div>
         <Typography variant="body2" style={{ marginBottom: "1vh" }}>{description}</Typography>
         <div className="statChip">
@@ -98,73 +98,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
             {supply && <Chip label={supply + " supply "} style={{ color: "white", backgroundColor: "rgb(54, 57, 91)" }} />}
         </div></div>
 
-    // const [openTimeseriesTwitter, setOpenTimeseriesTwitter] = React.useState(false);
-
-    // const [openTimeseriesDiscord, setOpenTimeseriesDiscord] = React.useState(false);
-
-    const [openHuntingVerification, setOpenHuntingVerification] = React.useState(false);
-
-    // const [openAnnouncements, setOpenAnnouncements] = React.useState(false);
-
     const history = useHistory();
-
-    // const toggleOpenTimeseriesTwitter = () => {
-    //     // Send a custom event
-
-    //     if (!openTimeseriesTwitter) {
-    //         ReactGA.event({
-    //             category: "sentimentboard",
-    //             action: "view_sentiment",
-    //             label: name, // optional
-    //         });
-    //         setOpenTimeseriesTwitter(!openTimeseriesTwitter);
-    //     }
-    //     if (!openTimeseriesTwitter) setOpenTimeseriesTwitter(!openTimeseriesTwitter);
-    // }
-
-    // const toggleOpenTimeseriesDiscord = () => {
-    //     // Send a custom event
-
-    //     if (!openTimeseriesDiscord) {
-    //         ReactGA.event({
-    //             category: "sentimentboard",
-    //             action: "view_sentiment",
-    //             label: name, // optional
-    //         });
-    //         setOpenTimeseriesDiscord(!openTimeseriesDiscord);
-    //     }
-    //     if (!openTimeseriesDiscord) setOpenTimeseriesDiscord(!openTimeseriesDiscord);
-    // }
-
-    const toggleOpenHuntingVerification = () => {
-        if (!openHuntingVerification) setOpenHuntingVerification(!openHuntingVerification);
-    }
-
-    // const toggleOpenAnnoucements = (e) => {
-    //     e.stopPropagation();
-    //     if (!openAnnouncements) setOpenAnnouncements(!openAnnouncements);
-    // }
-
-    // const generateTwitterDiscordButton = () => {
-    //     if(!hunting && db_tag && db_tag.includes('upcoming')) {
-    //         return <Grid container spacing={1} style={{ color: "rgb(282, 181, 127)", marginBottom: "10%" }} alignItems="center">
-    //             <Grid xs={6} item>
-    //                 <div onClick={toggleOpenTimeseriesTwitter} className="button twitter">Twitter Sentiments</div>
-    //             </Grid>
-
-    //             <Grid xs={6} item>
-    //                 <div onClick={toggleOpenTimeseriesDiscord} className="button discord">Discord Analytics</div>
-    //             </Grid>
-    //         </Grid>
-    //     }
-    //     if(!hunting && db_tag && !db_tag.includes('upcoming')) {
-    //         return <Grid container spacing={1} style={{ color: "rgb(282, 181, 127)", marginBottom: "10%" }} alignItems="center">
-    //             <Grid xs={12} item>
-    //                 <div onClick={() => history.push(`/details/${name}`)} className="button twitter">Twitter Sentiments</div>
-    //             </Grid>
-    //         </Grid>
-    //     }
-    // }
 
     const directToDetailPage = (e) => {
         e.preventDefault();
@@ -173,14 +107,12 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
 
     return (
         <ThemeProvider theme={theme}>
-            <Card style={{ border: "none", borderRadius: '2em', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: 'rgb(37, 40, 77)', marginRight: "1vh", position: "relative" }}>
-
-                {launch_date && <Chip label={new Date(launch_date).toDateString()} style={{ position: "absolute", right: 10, top: 5, color: "white", backgroundColor: "rgb(54, 57, 91)", zIndex: 1 }} />}
+            <Card style={{ border: "none", borderRadius: '2em', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: '#1c1f26', marginRight: "1vh", position: "relative" }}>
 
                 <CardActionArea>
                     <Tooltip title={descriptionToolTip} placement="bottom">
                         <CardMedia
-                            onClick={hunting ? toggleOpenHuntingVerification : directToDetailPage}
+                            onClick={directToDetailPage}
                             component="img"
                             image={img}
                             alt={name}
@@ -188,43 +120,13 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                         />
                     </Tooltip>
 
-                    {/* <TimeSeriesDialog
-                        name={name}
-                        emotion_pos={emotion_pos}
-                        emotion_sadness={emotion_sadness}
-                        emotion_anger={emotion_anger}
-                        pos={pos}
-                        neu={neu}
-                        neg={neg}
-                        img={img}
-                        setOpenTimeseries={setOpenTimeseriesTwitter}
-                        openTimeseries={openTimeseriesTwitter}
-                        tag={tag}
-                        shock={shock}
-                    />
-
-                    <DiscordDataDialog
-                        name={name}
-                        setOpenTimeseries={setOpenTimeseriesDiscord}
-                        openTimeseries={openTimeseriesDiscord}
-                    /> */}
-                    
-
-                    <CardContent onClick={hunting ? toggleOpenHuntingVerification : directToDetailPage}>
+                    <CardContent onClick={directToDetailPage}>
                         <Typography gutterBottom variant="h5" color="white" style={{ marginBottom: "3vh" }}>
                             {name}
                         </Typography>
 
-                        {/* {generateTwitterDiscordButton()} */}
 
-                        {/* {!hunting && tag !== 'upcoming' && console.log(tag) && <Grid container spacing={1} style={{ color: "rgb(282, 181, 127)", marginBottom: "10%" }} alignItems="center">
-                            <Grid xs={12} item>
-                                <div onClick={toggleOpenTimeseriesTwitter} className="button twitter">Twitter Sentiments</div>
-                            </Grid>
-                        </Grid>} */}
-
-
-                        {tag === "upcoming" && <Grid container spacing={1} style={{ color: "rgb(282, 181, 127)" }} alignItems="center">
+                        {<Grid container spacing={1} style={{ color: "rgb(282, 181, 127)" }} alignItems="center">
                             <Grid style={{ textAlign: "left" }} xs item>
                                 🔥 Hype:
                             </Grid>
@@ -239,7 +141,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                         </Grid>}
 
 
-                        <Typography color="rgb(96, 98, 123)" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
+                        <Typography color="#A8B3CF" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
                             SENTIMENT ANALYSIS <Tooltip title={"Sentiment is how emotionally people think about a project in all aspects (art, utility, pump, future,etc.)"} placement="right">
                                 <HelpIcon style={{ width: 20, height: 15, marginBottom: "0.5%" }} />
                             </Tooltip>
@@ -288,7 +190,7 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                             </Grid>
                         </Grid>
 
-                        <Typography color="rgb(96, 98, 123)" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
+                        <Typography color="#A8B3CF" style={{ textAlign: "left", marginTop: "5%", marginBottom: "5%" }}>
                             MOOD <Tooltip title={"Mood is the feeling of people/holders about the project overall"} placement="bottom">
                                 <HelpIcon style={{ width: 20, height: 15, marginBottom: "0.5%" }} />
                             </Tooltip>
@@ -351,12 +253,6 @@ export default function CollectionCard({ img, name, description, emotion_pos, em
                     <IconButton onClick={() => window.open(discord, "_blank")} color="discordColor">
                         <FaDiscord style={{ width: "2vw" }} />
                     </IconButton>
-                    {/* <Tooltip title='Recent announcements in discord'>
-                        <IconButton onClick={toggleOpenAnnoucements} color="speaker">
-                            <HiOutlineSpeakerphone style={{ width: "2vw" }} />
-                        </IconButton>
-                    </Tooltip> */}
-
                 </CardActions>
             </Card>
         </ThemeProvider>

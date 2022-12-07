@@ -12,20 +12,14 @@ import { FaTwitter, FaDiscord, } from "react-icons/fa";
 import LanguageIcon from '@mui/icons-material/Language';
 import magicedenicon from '../../assets/magicedenicon.png';
 import IconButton from '@mui/material/IconButton';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import CircleIcon from '@mui/icons-material/Circle';
 import Loading from '../Loading/Loading';
 import "../../css/Chat.css";
-import TradingViewChartV2 from '../Graph/TradingViewChartV2';
 
 const CollectionDetails = (props) => {
 
     const { state } = React.useContext(AuthContext);
     const [timeSeries, setTimeSeries] = React.useState(null);
-
-    const [emotionData, setEmotionData] = React.useState(null);
 
     const [name] = useState(props.match.params.collectionName)
 
@@ -42,17 +36,12 @@ const CollectionDetails = (props) => {
     const [website, setWebsite] = useState(null)
     const [twitter, setTwitter] = useState(null)
     const [discord, setDiscord] = useState(null)
-    const [openedTab, setOpenedTab] = useState("overview")
-    const [isUpcoming, setIsUpcoming] = useState(false)
-
-    // const [isNormalized, setIsNormalized] = React.useState(false);
-    // const [addListedCount, setAddListedCount] = React.useState(false);
 
     const BorderLinearProgressRed = styled(LinearProgress)(({ theme }) => ({
         height: 9,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: 'rgb(37, 40, 77)',
+            backgroundColor: '#1c1f26',
         },
         [`& .${linearProgressClasses.bar}`]: {
             borderRadius: 5,
@@ -64,7 +53,7 @@ const CollectionDetails = (props) => {
         height: 9,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: 'rgb(37, 40, 77)',
+            backgroundColor: '#1c1f26',
         },
         [`& .${linearProgressClasses.bar}`]: {
             borderRadius: 5,
@@ -76,7 +65,7 @@ const CollectionDetails = (props) => {
         height: 9,
         borderRadius: 5,
         [`&.${linearProgressClasses.colorPrimary}`]: {
-            backgroundColor: 'rgb(37, 40, 77)',
+            backgroundColor: '#1c1f26',
         },
         [`& .${linearProgressClasses.bar}`]: {
             borderRadius: 5,
@@ -90,24 +79,17 @@ const CollectionDetails = (props) => {
         setTimeSeries(timeSeriesData)
     }
 
-    const getEmotionTimeSeriesData = async (name) => {
-        const url = process.env.REACT_APP_BACKEND + "/load-collection-emotion-time-series-web"
-        const timeSeriesData = (await axios.post(url, { "query": name })).data
-        setEmotionData(timeSeriesData)
-    }
-
     useEffect(() => {
         if (name) {
             getTwitterTimeSeriesData(name);
-            getEmotionTimeSeriesData(name);
         }
 
     }, [name])
 
     useEffect(() => {
-        if (state.sentimentBoardAllTrending && state.sentimentBoardUpcoming) {
+        if (state.sentimentBoardAllTrending) {
 
-            let collections = [].concat(state.sentimentBoardAllTrending).concat(state.sentimentBoardUpcoming)
+            let collections = [].concat(state.sentimentBoardAllTrending)
 
             let collection = collections.find(c => c.name === name);
 
@@ -141,29 +123,9 @@ const CollectionDetails = (props) => {
             setTwitter(collection?.twitter)
             setDiscord(collection?.discord)
             setWebsite(collection?.website)
-
-
-            setIsUpcoming(collection?.tag.includes("upcoming"))
-
         }
         // eslint-disable-next-line
-    }, [name, state.sentimentBoardAllTrending, state.sentimentBoardUpcoming])
-
-    // const normalize = () => {
-    //     setIsNormalized(!isNormalized);
-    // }
-
-    // const toggleAddListedCount = () => {
-    //     setAddListedCount(!addListedCount);
-    // }
-
-    const handleChangeTab = (event, newValue) => {
-        setOpenedTab(newValue)
-    }
-
-    // const description = "Changing the value of sentiment scores and floor prices under [0, 1] scale for better comparison";
-
-    // const description2 = "Adding listed count data to the chart for comparison"
+    }, [name, state.sentimentBoardAllTrending])
 
     const latestValue = (array) => {
         return array[array.length - 1]
@@ -198,7 +160,7 @@ const CollectionDetails = (props) => {
 
                     {timeSeries === null && <Loading />}
                     {timeSeries !== undefined && timeSeries !== null && shock !== null && Object.keys(timeSeries).length !== 0 && <Grid style={{ marginLeft: "2vw", marginBottom: "5vh" }} container>
-                        {!isUpcoming && <InfoCard
+                        {<InfoCard
                             floorPrice={round(latestValue(timeSeries.floorPrice))}
                             volume24h={round(latestValue(timeSeries.volume24h))}
                             volumeAll={round(latestValue(timeSeries.volumeAll))}
@@ -206,40 +168,9 @@ const CollectionDetails = (props) => {
                             followers={latestValue(timeSeries.follower)}
                             shock={shock}
                         />}
-
-                        <Box sx={{ width: '100%', marginBottom: "5vh" }}>
-                            <Tabs
-                                value={openedTab}
-                                onChange={handleChangeTab}
-                                textColor="primary"
-                                indicatorColor="primary"
-                                aria-label="Opened Tab"
-                            >
-                                <Tab value="overview" label={<span style={{ color: 'white', fontSize: "20px" }}>Overview</span>} />
-                                {!isUpcoming && <Tab value="me" label={<span style={{ color: 'white', fontSize: "20px" }}>ME Insights</span>} />}
-                                <Tab value="twitter" label={<span style={{ color: 'white', fontSize: "20px" }}>Twitter Sentiment</span>} />
-                                {isUpcoming && <Tab value="discord" label={<span style={{ color: 'white', fontSize: "20px" }}>Discord analytics</span>} />}
-                            </Tabs>
-                        </Box>
-
-                        {openedTab === "overview" &&
                             <Grid container>
                                 <Grid xs={8} item>
-                                    <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count" isNormalized={true} isUpcoming={isUpcoming} />
-
-                                    {/* <div style={{ display: "flex", alignItems: "center" }}>
-                                <FormGroup>
-                                    <Tooltip title={description} placement="bottom-start">
-                                        <FormControlLabel control={<Checkbox defaultChecked={false} checked={isNormalized} onClick={normalize} color="primary" />} label="Normalized" />
-                                    </Tooltip>
-                                </FormGroup>
-
-                                <FormGroup>
-                                    <Tooltip title={description2} placement="bottom-start">
-                                        <FormControlLabel control={<Checkbox defaultChecked={false} checked={addListedCount} onClick={toggleAddListedCount} color="primary" />} label="Add Listed Count" />
-                                    </Tooltip>
-                                </FormGroup>
-                            </div> */}
+                                    <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count" isNormalized={true} />
 
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
                                         <div style={{ display: "flex", alignItems: "center" }}>
@@ -259,30 +190,6 @@ const CollectionDetails = (props) => {
                                 </Grid>
 
                                 <Grid xs={4} item>
-                                    {/* <div style={{ fontSize: "1.5vw", fontFamily: "BumbleGum", marginBottom: "4vh", textAlign: "left" }}>Hype
-                                <Tooltip title={"Estimation of how hype a project is"} placement="bottom">
-                                    <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
-                                </Tooltip>
-                            </div> */}
-                                    {/* <div style={{ width: "20vw" }}>
-                                <Grid>
-                                    <Grid container alignItems="center">
-                                        <Grid style={{ color: "white", textAlign: "left" }} xs item>
-                                            🔥 Hype:
-                                        </Grid>
-
-                                        <Grid xs item>
-                                            <BorderLinearProgressHype variant="determinate" value={hype} />
-                                        </Grid>
-
-                                        <Grid style={{ color: "rgb(282, 181, 127)", textAlign: "right" }} xs item>
-                                            {hype}%
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </div> */}
-
-
                                     <div style={{ fontSize: "1.5vw", fontFamily: "BumbleGum", marginBottom: "4vh", marginTop: "4vh", textAlign: "left" }}>Sentiment analysis
                                         <Tooltip title={"Sentiment is how emotionally people think about a project in all aspects (art, utility, pump, future,etc.)"} placement="bottom">
                                             <HelpIcon style={{ color: 'grey', width: 20, height: 20, marginLeft: "1%" }} />
@@ -385,52 +292,7 @@ const CollectionDetails = (props) => {
                                         </Grid>
                                     </div>
                                 </Grid>
-
-                                {emotionData && emotionData !== {} && <Grid xs={8} item style={{ marginTop: "6vh" }}>
-                                    <TradingViewChartV2 name={name} title={"Sentiment breakdown"} value={emotionData.positiveDict} value2={emotionData.neutralDict} value3={emotionData.negativeDict} currentValue={round(emotionData.currentPositive)} currentValue2={round(emotionData.currentNeutral)} currentValue3={round(emotionData.currentNegative)} />
-
-                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgb(132, 235, 176)", marginRight: "0.25vw" }} />
-                                            <div>Positive</div>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgb(250, 224, 145)", marginRight: "0.25vw" }} />
-                                            <div>Neutral</div>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <CircleIcon style={{ color: "rgb(240, 131, 131)", marginRight: "0.25vw" }} />
-                                            <div>Negative</div>
-                                        </div>
-                                    </div>
-                                </Grid>}
-                            </Grid>}
-
-                        {openedTab === "twitter" && timeSeries !== undefined && timeSeries !== null &&
-                            <Grid container>
-                                <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} title="Sentiment score" />
-                                </Grid>
-
-                                <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.hype.map((x) => x * 100)} title="Hype score" />
-                                </Grid>
-                            </Grid>}
-
-                        {openedTab === "me" && timeSeries !== undefined && timeSeries !== null &&
-                            <Grid container>
-                                {!isUpcoming && <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.floorPrice} title="Floor Price" />
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.volume24h} title="Volume (24 hours)" />
-                                </Grid>}
-
-                                {!isUpcoming && <Grid xs={6} item>
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.listedCount} title="Listed count" />
-                                    <TradingViewChart time={timeSeries.dateTime} value={timeSeries.volumeAll} title="Volume (All time)" />
-                                </Grid>}
-
-                            </Grid>}
-
+                            </Grid>
                     </Grid>}
                 </Grid>
             </Grid>

@@ -36,9 +36,9 @@ const SentimentBoard = ({ dispatch, date }) => {
 
     const [sortedData, setSortedData] = useState([])
 
-    const [sortValue, setSortValue] = useState(date === "upcoming" ? "Launch date" : "Positive")
+    const [sortValue, setSortValue] = useState("Positive")
 
-    const [orderValue, setOrderValue] = useState(date === "upcoming" ? "Ascending" : "Descending")
+    const [orderValue, setOrderValue] = useState("Descending")
 
     const [me, setMe] = useState(true)
 
@@ -63,14 +63,6 @@ const SentimentBoard = ({ dispatch, date }) => {
 
     useEffect(() => {
         switch (date) {
-            case "upcoming":
-                setMe(false);
-                let upcoming = []
-                if (state.sentimentBoardUpcoming) {
-                    upcoming = [].concat(state.sentimentBoardUpcoming)
-                }
-                setSentimentData(upcoming)
-                break;
             case "1h":
                 setMe(true);
                 if (state.sentimentBoard1h) setSentimentData(state.sentimentBoard1h)
@@ -100,30 +92,20 @@ const SentimentBoard = ({ dispatch, date }) => {
                 break;
         }
 
-    }, [date, state.sentimentBoardUpcoming, state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
+    }, [date, state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
 
 
     useEffect(() => {
-        if (date === "upcoming") {
-            setSortValue("Launch date")
-            setOrderValue("Ascending")
-            setSortedData(sentimentData.sort((a, b) => parseFloat((new Date(a.launchDate)).getTime()) - parseFloat((new Date(b.launchDate)).getTime())))
-        }
-        else {
-            setSortValue("Positive")
-            setOrderValue("Descending")
-            setSortedData(sentimentData.sort((a, b) => b.twitter_sent_avg_positive - a.twitter_sent_avg_positive));
-        }
+
+        setSortValue("Positive")
+        setOrderValue("Descending")
+        setSortedData(sentimentData.sort((a, b) => b.twitter_sent_avg_positive - a.twitter_sent_avg_positive));
+
         // eslint-disable-next-line
     }, [sentimentData])
 
     const handleHelper = (sortBy, order) => {
         switch (sortBy) {
-            //if date === "upcoming"
-            case "Launch date":
-                if (order === "Descending") setSortedData(sentimentData.sort((a, b) => parseFloat((new Date(b.launchDate)).getTime()) - parseFloat((new Date(a.launchDate)).getTime())))
-                else setSortedData(sentimentData.sort((a, b) => parseFloat((new Date(a.launchDate)).getTime()) - parseFloat((new Date(b.launchDate)).getTime())))
-                break;
             case "Positive":
                 if (order === "Descending") setSortedData(sentimentData.sort((a, b) => b.twitter_sent_avg_positive - a.twitter_sent_avg_positive))
                 else setSortedData(sentimentData.sort((a, b) => a.twitter_sent_avg_positive - b.twitter_sent_avg_positive))
@@ -193,7 +175,7 @@ const SentimentBoard = ({ dispatch, date }) => {
             neu = neu.toFixed(0)
             pos = pos.toFixed(0)
 
-            let { twitter_emo_avg_anger, twitter_emo_avg_joy, twitter_emo_avg_optimism, twitter_emo_avg_sadness, price, supply, website, launchDate } = collection
+            let { twitter_emo_avg_anger, twitter_emo_avg_joy, twitter_emo_avg_optimism, twitter_emo_avg_sadness, price, supply, website } = collection
 
             let emotion_pos = ((twitter_emo_avg_joy + twitter_emo_avg_optimism) * 100).toFixed(0)
             twitter_emo_avg_anger = (twitter_emo_avg_anger * 100).toFixed(0)
@@ -230,13 +212,7 @@ const SentimentBoard = ({ dispatch, date }) => {
                             website={website}
                             twitter={twitter}
                             discord={discord}
-                            launch_date={launchDate}
                             me={me}
-                            tag={date}
-                            shock={collection.shock}
-                            hunting={false}
-                            dispatch={dispatch}
-                            db_tag={collection.tag}
                         />
                     </Suspense>
                 </Grid>
@@ -259,9 +235,6 @@ const SentimentBoard = ({ dispatch, date }) => {
         else if (date === "1day") {
             return "24h Popular 🔥"
         }
-        else if (date === "upcoming") {
-            return "Upcoming Launches"
-        }
         else if (date === "7days") {
             return "7 Days Popular 🔥"
         }
@@ -276,7 +249,7 @@ const SentimentBoard = ({ dispatch, date }) => {
         options={sortedData}
         autoComplete
         autoHighlight
-        style={{ backgroundColor: "rgb(37, 40, 77)", width: "40%", borderRadius: "2em" }}
+        style={{ backgroundColor: "#1c1f26", width: "40%", borderRadius: "2em" }}
         onChange={(event, newValue) => {
             if (!newValue) {
                 setSortedData(sentimentData);
@@ -307,7 +280,7 @@ const SentimentBoard = ({ dispatch, date }) => {
                 label="🔍 Search collection"
                 autoComplete='off'
                 InputLabelProps={{
-                    style: { color: 'rgb(96, 98, 123)' },
+                    style: { color: '#A8B3CF' },
                 }}
                 inputProps={{
                     ...params.inputProps,
@@ -322,18 +295,16 @@ const SentimentBoard = ({ dispatch, date }) => {
     />)
 
     const sortBy = (
-        <div style={{ display: "flex", alignItems: "center", color: 'rgb(96, 98, 123)' }}>
+        <div style={{ display: "flex", alignItems: "center", color: '#A8B3CF' }}>
             Sort by:
             <div>
                 <FormControl sx={{ m: 1, width: 200 }}>
                     <Select
-                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "rgb(37, 40, 77)", width: "100%" }}
+                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "#1c1f26", width: "100%" }}
                         id="sortBy"
                         value={sortValue}
                         onChange={handleSortByChange}
                     >
-                        {date === "upcoming" && <MenuItem key={7} value={"Launch date"}>🗓️ Launch date</MenuItem>}
-                        {date === "upcoming" && <MenuItem key={0} value={"Hype"}>🔥 Hype</MenuItem>}
                         <MenuItem key={1} value={"Positive"}>👍 Positive</MenuItem>
                         <MenuItem key={2} value={"Neutral"}>🤏 Neutral</MenuItem>
                         <MenuItem key={3} value={"Negative"}>👎 Negative</MenuItem>
@@ -347,12 +318,12 @@ const SentimentBoard = ({ dispatch, date }) => {
     )
 
     const order = (
-        <div style={{ display: "flex", alignItems: "center", color: 'rgb(96, 98, 123)' }}>
+        <div style={{ display: "flex", alignItems: "center", color: '#A8B3CF' }}>
             Order:
             <div>
                 <FormControl sx={{ m: 1, width: 200 }}>
                     <Select
-                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "rgb(37, 40, 77)", width: "100%" }}
+                        style={{ marginLeft: "1vw", color: "white", borderWidth: 0, borderRadius: "2em", backgroundColor: "#1c1f26", width: "100%" }}
                         id="order"
                         value={orderValue}
                         onChange={handleOrderChange}

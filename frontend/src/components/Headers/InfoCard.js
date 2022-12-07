@@ -43,8 +43,9 @@ const InfoCard = ({ floorPrice, volume24h, volumeAll, listCount, followers, shoc
                <Card style={{ borderRadius: "2em", color: "white", backgroundColor: "#2B2B43", textAlign: "center" }}>
                    <CardBody>
                            <CardTitle
-                               tag="h6"
+                               tag="h4"
                                className="text-uppercase text-muted mb-4"
+                               style={{color: 'white'}}
                            >
                                {title}
                            </CardTitle>

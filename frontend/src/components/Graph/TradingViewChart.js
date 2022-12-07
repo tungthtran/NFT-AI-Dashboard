@@ -3,7 +3,7 @@ import { createChart } from 'lightweight-charts';
 import { round } from '../../helper/utils';
 import "../../css/Chart.css"
  
-function TradingViewChart({ time, value, title, value2, value3, isNormalized, addListedCount, isUpcoming, name }) {
+function TradingViewChart({ time, value, title, value2, value3, isNormalized, addListedCount, name }) {
  
    const [ref] = useState(useRef());
  
@@ -17,9 +17,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
    const [data2, setData2] = useState([]);
  
    const [data3, setData3] = useState([]);
- 
-   // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
- 
+  
    const OFFSET = 14400000;
  
    function timeToTz(d) {
@@ -45,12 +43,12 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
    useEffect(() => {
        let toolTip = document.createElement('div')
        toolTip.className = 'chart-legend'
-       !isUpcoming && value2 && value3 && ref.current.appendChild(toolTip)
+       value2 && value3 && ref.current.appendChild(toolTip)
  
        const darkTheme = {
            chart: {
                layout: {
-                   backgroundColor: '#2B2B43',
+                   backgroundColor: '#1c1f26',
                    lineColor: '#2B2B43',
                    textColor: '#D9D9D9',
                },
@@ -110,7 +108,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
  
        syncToTheme('Dark', newChart, newAreaSeries);
  
-       !isUpcoming && value2 && value3 && newChart.subscribeCrosshairMove(function (param) {
+       value2 && value3 && newChart.subscribeCrosshairMove(function (param) {
  
            let sentiment = param.seriesPrices.get(newAreaSeries) ? round(param.seriesPrices.get(newAreaSeries) * delta + min) : round(filterValue[filterValue.length - 1]);
            let floorPrice = param.seriesPrices.get(newLineSeries) ? round(param.seriesPrices.get(newLineSeries) * delta2 + min2) : round(filterValue2[filterValue2.length - 1]);
@@ -137,7 +135,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
        setLineSeries(newLineSeries);
        setLineSeries2(newLineSeries2)
  
-   }, [ref, anchorChart, name, isNormalized, addListedCount, isUpcoming, title, value, value2, value3, filterValue, filterValue2, filterValue3, delta, delta2, delta3, min, min2, min3]);
+   }, [ref, anchorChart, name, isNormalized, addListedCount, title, value, value2, value3, filterValue, filterValue2, filterValue3, delta, delta2, delta3, min, min2, min3]);
  
  
    useEffect(() => {
@@ -217,8 +215,7 @@ function TradingViewChart({ time, value, title, value2, value3, isNormalized, ad
    }, [data, data2, data3]);
  
    const generateTitle = () => {
-       if (isUpcoming) return "Sentiment score"
-       else return title
+       return title
    }
  
    return (

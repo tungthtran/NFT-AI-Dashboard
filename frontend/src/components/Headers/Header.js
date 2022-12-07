@@ -17,12 +17,12 @@ const Header = () => {
 
     useEffect(() => {
 
-        if (state.sentimentBoardAllTrending && state.sentimentBoardUpcoming) {
-            let allCollections = [].concat(state.sentimentBoardAllTrending).concat(state.sentimentBoardUpcoming)
+        if (state.sentimentBoardAllTrending) {
+            let allCollections = [].concat(state.sentimentBoardAllTrending)
             setData(allCollections)
         }
 
-    }, [state.sentimentBoardAllTrending, state.sentimentBoardUpcoming])
+    }, [state.sentimentBoardAllTrending])
 
     return (
         <div className="header">
@@ -32,7 +32,7 @@ const Header = () => {
                 options={data}
                 autoComplete
                 autoHighlight
-                style={{ backgroundColor: "rgb(37, 40, 77)", width: "100%", borderRadius: "2em" }}
+                style={{ backgroundColor: "#1c1f26", width: "100%", borderRadius: "2em" }}
                 onChange={(event, newValue) => {
                     if (newValue) {
                         handleSearch(newValue);
@@ -58,7 +58,7 @@ const Header = () => {
                         label="🔍 Search All Collections"
                         autoComplete='off'
                         InputLabelProps={{
-                            style: { color: 'rgb(96, 98, 123)' },
+                            style: { color: '#A8B3CF' },
                         }}
                         inputProps={{
                             ...params.inputProps,
