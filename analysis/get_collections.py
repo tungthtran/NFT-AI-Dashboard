@@ -1,10 +1,9 @@
 import time
-import requests
 from processing import Processing
 import db
 from datetime import datetime
 from pytz import timezone
-from crawler import Crawler
+from crawling.crawler import Crawler
 from utils import logging
 from metric_shock import MetricShock
 

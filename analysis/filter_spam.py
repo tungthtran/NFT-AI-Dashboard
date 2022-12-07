@@ -4,9 +4,7 @@ from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer
 import numpy as np
 import torch
-import db
 from itertools import compress
-from utils import logging
 
 MAX_LENGTH = 256
 BATCH_SIZE = 16

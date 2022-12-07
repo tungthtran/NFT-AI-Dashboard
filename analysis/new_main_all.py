@@ -1,6 +1,6 @@
 from utils import logging
 import db
-from crawler import Crawler
+from crawling.crawler import Crawler
 import time
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer

@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from utils import logging
+from analysis.utils import logging
 
 MONGO_ENDPOINT = 'mongodb+srv://hieunguyen:Hieu1234@hieubase.r9ivh.gcp.mongodb.net'
 MONGO_PORT = 27017
@@ -11,8 +11,6 @@ DB_COLLECTION = 'dashboarditems'
 client = MongoClient(MONGO_ENDPOINT, MONGO_PORT)
 # db = client[DATABASE_NAME]
 
-# cloud_client = MongoClient('mongodb+srv://doremonnft:doremon434@timeserieslog.tntwy.mongodb.net/test')
-# cloud_db = cloud_client[DATABASE_NAME]
 
 def get_collection(collection_name, db_name=DATABASE_NAME, cloud=False):
     current_client = client
