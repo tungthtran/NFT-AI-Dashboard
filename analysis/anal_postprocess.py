@@ -1,13 +1,10 @@
 from kafka_shock import KafkaShock
 tag_map = {
-            'me-upcoming':'me-upcoming', 
             'new_collections': 'new-collections', 
             '1h':'popular-collections-1h', 
             '1d': 'popular-collections-1day', 
             '7d': 'popular-collections-7days', 
             '30d': 'popular-collections-30days',
-            'request-upcoming': 'request-upcoming',
-            'request-me': 'request-me'
             }
 
 def process_all_collections_for_db(tag_to_data):
@@ -36,27 +33,6 @@ def process_all_collections_for_db(tag_to_data):
   
   return list(name_map.values())
 
-
-# def process_all_collections_for_db(tag_to_data):
-#     symbol_map = {}
-#     for tag, data in tag_to_data.items():
-#         for col in data:
-#             symbol = col['symbol']
-#             if symbol not in symbol_map:
-#                 if '_id' in col:
-#                     col.pop('_id')
-#                 symbol_map[symbol] = {
-#                     **col,
-#                     **{v: False for k, v in tag_map.items()}
-#                 }
-
-#     for tag, data in tag_to_data.items():
-#         for col in data:
-#             symbol = col['symbol']
-#             db_tag = tag_map[tag]
-#             symbol_map[symbol][db_tag] = True
-
-#     return list(symbol_map.values())
 
 def map_nfts_to_tag(all_nfts_stat, tags):
   nft_map = {tag: [] for tag in tags}
