@@ -12,9 +12,9 @@ function PieChart({ isSentiment, positive, neutral, negative }) {
 
     const moodData = [
         ["Mood", "Percentage"],
-        ["Happy", positive],
-        ["Anger", negative],
-        ["Sad", neutral],
+        ["Happy 🤗", positive],
+        ["Angry 🤬", negative],
+        ["Sad 😢", neutral],
     ];
 
     const options = {

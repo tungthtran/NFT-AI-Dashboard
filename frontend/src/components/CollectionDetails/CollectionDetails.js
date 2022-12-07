@@ -139,7 +139,7 @@ const CollectionDetails = (props) => {
                     {timeSeries !== undefined && timeSeries !== null && shock !== null && Object.keys(timeSeries).length !== 0 && <Grid style={{ marginLeft: "2vw" }} container>
                         <Grid container>
                             <Grid xs={8} item>
-                                <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count" isNormalized={true} />
+                                <TradingViewChart name={name} time={timeSeries.dateTime} value={timeSeries.norm.map((x) => x * 100)} value2={timeSeries.floorPrice} value3={timeSeries.listedCount} addListedCount={true} title="Sentiment vs Floor Price vs Listed Count Chart" isNormalized={true} />
 
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
                                     <div style={{ display: "flex", alignItems: "center" }}>
