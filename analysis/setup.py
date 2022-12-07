@@ -8,10 +8,6 @@ os.system(
   cp /usr/lib/chromium-browser/chromedriver /usr/bin
   '''
 )
-os.system('''
-  scrapy startproject news_crawler
-  cp -r myspider.py news_crawler/news_crawler/spiders
-''')
 
 from selenium import webdriver
 from fake_useragent import UserAgent

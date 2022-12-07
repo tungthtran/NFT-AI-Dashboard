@@ -4,8 +4,7 @@ import time
 import re
 import pytz
 from datetime import datetime
-import db_test as db
-# username = 'greatgoatsnft'
+
 TOKEN_LIST = [
             'AAAAAAAAAAAAAAAAAAAAANmGQQEAAAAAU%2FFD1pctqU9d8QEnJuYegAWI7Gg%3DvxNAUmFtxxUPRpCtfPcl5j7FyBbqzRPNxoRxEhBCbdA6tIjqLv', #Tung
             'AAAAAAAAAAAAAAAAAAAAAF9lZQEAAAAAfJi0sna3YwoxlZ0WW84HdyY74BA%3DGbwIxBQz83eChkdNcqOSiCcHDncxpWpMAGJyK2gPVDsMnL8oIt',   #Long2M
@@ -183,11 +182,3 @@ if __name__ == "__main__":
         except:
             print(twitter_url)
     print("Finish crawling timeline tweets!")
-    # username = get_twitter_username('https://twitter.com/pengsol_')
-    # data = get_all_timeline_tweets_by_username(username)
-    # data = {
-    #     'data': data
-    # }
-    # with open('timeline_tweet.json', 'w') as f:
-    #     json.dump(data, f)
-

@@ -1,8 +1,8 @@
-from redis_queue import RedisQueue
+from analysis.redis_queue import RedisQueue
 from crawler import Crawler
-import anal_postprocess as postprocess
+import analysis.anal_postprocess as postprocess
 import pprint
-import db
+import analysis.db as db
 tag_map = {
             '1h': 'popular-collections-1h', 
             '1d': 'popular-collections-1day', 

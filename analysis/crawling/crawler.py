@@ -1,6 +1,6 @@
 import time
 import json
-from utils import logging
+from analysis.utils import logging
 import requests
 import re
 from selenium import webdriver
@@ -9,11 +9,6 @@ from selenium.webdriver.common.by import By
 import pytz
 from datetime import datetime, timedelta
 from dateutil import parser
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.common.by import By
-
-# from fake_useragent import UserAgent
 
 class Crawler():
     def __init__(self, max_tweets=50):
@@ -256,8 +251,3 @@ class Crawler():
         json_data = list(map(self.convert_upcoming_to_db_format, json_data))
         result = {'me-upcoming': json_data}
         return result
-
-    
-    
-# I will use AI to analyze the sentiment of the tweets. In detail, I will train a multi-language model for Twitter's tweets and publish a paper on this topic at a conference. After that, I will apply fine-tuning for this model to the sentiment and emotion task and provide some benchmarks for further research. This AI model will help a lot for research in leveraging a pre-trained model for sentiment analysis and applying this to many use cases.
-# I will analyze the sentiment, words' length, and keep track of the user id and the number of followers. I will also measure the frequency of the words.

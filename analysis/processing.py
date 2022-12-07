@@ -1,6 +1,5 @@
 from utils import logging
-import anal
-from crawler import Crawler
+from crawling.crawler import Crawler
 import db
 from anal import Anal
 
