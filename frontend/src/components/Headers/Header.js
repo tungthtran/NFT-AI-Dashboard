@@ -3,6 +3,7 @@ import '../../css/Header.css';
 import { useHistory } from 'react-router-dom';
 import { Box, TextField, Autocomplete } from '@mui/material';
 import { AuthContext } from '../../App';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Header = () => {
 
@@ -15,6 +16,10 @@ const Header = () => {
     const handleSearch = (newValue) => {
         history.push(`/details/${newValue.name}`)};
 
+    const directToHome = () => {
+        history.push(`/`)
+    }
+
     useEffect(() => {
 
         if (state.sentimentBoardAllTrending) {
@@ -26,6 +31,8 @@ const Header = () => {
 
     return (
         <div className="header">
+            <div onClick={directToHome} className="item"><HomeIcon /> Home</div>
+
             <Autocomplete
                 loading={data.length === 0}
                 id="searchCollection"
@@ -55,8 +62,7 @@ const Header = () => {
                     <TextField
                         sx={{ input: { color: 'white' } }}
                         {...params}
-                        label="🔍 Search All Collections"
-                        autoComplete='off'
+                        label="🔍 Search Collections"
                         InputLabelProps={{
                             style: { color: '#A8B3CF' },
                         }}

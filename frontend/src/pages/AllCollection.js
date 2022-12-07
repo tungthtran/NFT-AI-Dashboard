@@ -190,12 +190,10 @@ const AllCollection = () => {
                 data={data}
                 options={{
                     sorting: true,
-                    search: true,
-                    paging: true,
-                    pageSize: 20,
+                    search: false,
+                    paging: false,
                     showTitle: false,
                     emptyRowsWhenPaging: false,
-                    pageSizeOptions: [20, 50, 100],
                     headerStyle: { backgroundColor: "#1c1f26", fontSize: "1vw" },
                     searchFieldStyle: { color: "white", backgroundColor: "#1c1f26", border: "none", borderRadius: "2em", width: "100%" }
                 }}

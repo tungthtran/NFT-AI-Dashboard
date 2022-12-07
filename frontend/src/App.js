@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import Navbar from "./components/Headers/NavBar";
 import { Box, makeStyles } from '@material-ui/core';
 import axios from "axios";
 import AllCollection from "./pages/AllCollection";
@@ -67,53 +66,53 @@ function App() {
     let collectionSet = new Set()
     let uniqueCol = []
     for (const collection of collections) {
-        const name = collection.name ? collection.name : collection.collection_name
-        if (!collectionSet.has(name)) {
-            uniqueCol.push(collection)
-            collectionSet.add(name)
-        }
+      const name = collection.name ? collection.name : collection.collection_name
+      if (!collectionSet.has(name)) {
+        uniqueCol.push(collection)
+        collectionSet.add(name)
+      }
     }
     return uniqueCol
-}
+  }
 
   useEffect(() => {
-      const path = `${process.env.REACT_APP_BACKEND}/load-sentiment-by-tag`
+    const path = `${process.env.REACT_APP_BACKEND}/load-sentiment-by-tag`
 
-      axios.post(path, { "tag": "new-collections" }).then(results => {
-        let data = results.data
-        data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
-        dispatch({
-          type: "SET_SENTIMENT_BOARD_NEW_COLLECTION",
-          payload: { sentimentBoardNewCollection: data }
-        })
+    axios.post(path, { "tag": "new-collections" }).then(results => {
+      let data = results.data
+      data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
+      dispatch({
+        type: "SET_SENTIMENT_BOARD_NEW_COLLECTION",
+        payload: { sentimentBoardNewCollection: data }
       })
+    })
 
-      axios.post(path, { "tag": "popular-collections-1day" }).then(results => {
-        let data = results.data
-        data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
-        dispatch({
-          type: "SET_SENTIMENT_BOARD_1D",
-          payload: { sentimentBoard1d: data }
-        })
+    axios.post(path, { "tag": "popular-collections-1day" }).then(results => {
+      let data = results.data
+      data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
+      dispatch({
+        type: "SET_SENTIMENT_BOARD_1D",
+        payload: { sentimentBoard1d: data }
       })
+    })
 
-      axios.post(path, { "tag": "popular-collections-7days" }).then(results => {
-        let data = results.data
-        data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
-        dispatch({
-          type: "SET_SENTIMENT_BOARD_7D",
-          payload: { sentimentBoard7d: data }
-        })
+    axios.post(path, { "tag": "popular-collections-7days" }).then(results => {
+      let data = results.data
+      data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
+      dispatch({
+        type: "SET_SENTIMENT_BOARD_7D",
+        payload: { sentimentBoard7d: data }
       })
+    })
 
-      axios.post(path, { "tag": "popular-collections-1h" }).then(results => {
-        let data = results.data
-        data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
-        dispatch({
-          type: "SET_SENTIMENT_BOARD_1H",
-          payload: { sentimentBoard1h: data }
-        })
+    axios.post(path, { "tag": "popular-collections-1h" }).then(results => {
+      let data = results.data
+      data.forEach(item => item.image = item.image.replace('nftstorage', 'dweb'))
+      dispatch({
+        type: "SET_SENTIMENT_BOARD_1H",
+        payload: { sentimentBoard1h: data }
       })
+    })
 
   }, [])
 
@@ -127,7 +126,7 @@ function App() {
         payload: { sentimentBoardAllTrending: allCollection }
       })
     }
-    
+
   }, [state.sentimentBoardNewCollection, state.sentimentBoard1h, state.sentimentBoard1d, state.sentimentBoard7d])
 
   return (
@@ -138,19 +137,16 @@ function App() {
       }}
     >
       <div className="App">
-        <Router> 
-          <Box display="flex">
-            <Navbar/>
-            <Box className={classes.content}>
-              <Header />
-              <Switch>
-                <Route path="/details/:collectionName" render={(props) => {return <CollectionDetails {...props} key={window.location.pathname} />}}>
-                </Route>
-                <Route path="/">
-                  <AllCollection />
-                </Route>
-              </Switch>
-            </Box>
+        <Router>
+          <Box className={classes.content}>
+            <Header />
+            <Switch>
+              <Route path="/details/:collectionName" render={(props) => { return <CollectionDetails {...props} key={window.location.pathname} /> }}>
+              </Route>
+              <Route path="/">
+                <AllCollection />
+              </Route>
+            </Switch>
           </Box>
         </Router>
       </div>

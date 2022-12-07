@@ -2,6 +2,7 @@
     width: 100%;
     height: 10vh;
     display: flex;
+    justify-content: center;
     align-items: center;
     background-color: #0e1217;
     position: sticky;
@@ -10,18 +11,7 @@
     margin-bottom: 2vh;
 }
 
-.header__logo {
-    width: 15vw;
-    object-fit: contain;
-    margin-top: 0vh;
-    margin-bottom: 0vh;
-}
-
-.social {
-    width: 4vw;
-}
-
-.social:hover {
-    transform: scale(1.2);
-    transition: 450ms;
+.item {
+    color: #A8B3CF;
+    margin-right: 2vw;
 }
