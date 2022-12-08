@@ -6,24 +6,24 @@ import pytz
 from datetime import datetime
 
 TOKEN_LIST = [
-            'AAAAAAAAAAAAAAAAAAAAANmGQQEAAAAAU%2FFD1pctqU9d8QEnJuYegAWI7Gg%3DvxNAUmFtxxUPRpCtfPcl5j7FyBbqzRPNxoRxEhBCbdA6tIjqLv', #Tung
-            'AAAAAAAAAAAAAAAAAAAAAF9lZQEAAAAAfJi0sna3YwoxlZ0WW84HdyY74BA%3DGbwIxBQz83eChkdNcqOSiCcHDncxpWpMAGJyK2gPVDsMnL8oIt',   #Long2M
-            'AAAAAAAAAAAAAAAAAAAAAARDZgEAAAAADYYkyRrrYyhAYVuNpBY%2Bguqu5D8%3DlRKskVNz9fd9FvWaLGpJVonzzscugcD5l5FGLaLT9NWx6zaO82', #Hieu
-            'AAAAAAAAAAAAAAAAAAAAAMlmZAEAAAAAJ%2Bizx52ZQp4GuNPBn2Q5ZHVYUaI%3D88pFf4rm7aID4yjYj7Bpk7lFG5pTVW2Fsmh4IlFnUKhA3TP3Ki', #Long2M
-            'AAAAAAAAAAAAAAAAAAAAACii6QAAAAAAcm9MSth7nqAXO80q6j6rtmHVu5Q%3D5dLyPGVkTm1lu8bhjWOXM1RLe0wSnXhjiWgDkT4yn8urLta9Uq', #Huy,
-            'AAAAAAAAAAAAAAAAAAAAADshcAEAAAAAKphEqM9INoFMpcQUYpjmElRaSxc%3D4cEXtxAHIhrLNaFQLmPtiZYwUNi1ZHYytnST76xABdq23XGD3e', #Hminh
-            'AAAAAAAAAAAAAAAAAAAAAFEgcAEAAAAAvUL2ZU6Z9WUMHU1H31iAR%2BNJXLc%3DXAwgE5rjUWtkACtbPtyad4Q82FenYxvN7HgHooSFfIWHVHdP1Q', #Tyler
-            'AAAAAAAAAAAAAAAAAAAAAOAhcAEAAAAA6TR5xLM3%2FB5yEKy8NM8sLMYZ1l8%3Dtp35xnDx8WCD0jHT44BEXqfu3ywkzg8i6CSqxvwNaAKh9owmqs', #Vy
-            'AAAAAAAAAAAAAAAAAAAAAClAbAEAAAAAtXO8Co4bSkmGmWUx77ZPjYQneqM%3DaIPAHGm6SBw9MJpYnVG8Zfgv7sb7L6AHlt3SNX4bqpODd4rLTR', #Doremonnft
-            'AAAAAAAAAAAAAAAAAAAAAL%2F9cgEAAAAASPq0PwHy7ODA1ksg95iWISa7znE%3Dgbi4HPTwySmsjLujfD98YFWbwiVOu8PRKZOU5SI4hbmgRZQtAx', #Doremonnft4
-            'AAAAAAAAAAAAAAAAAAAAAOz9cgEAAAAA8g54SXVnUx6kktUQ239xmtLZE%2Bs%3D7B47SFaHZr4yTaA0gzM7ks50W08KlEPaTDeqBSQoMgMQ9cmec0', #doremonnft5
-            'AAAAAAAAAAAAAAAAAAAAAAn%2BcgEAAAAAUFth6iYg3CpSmyul9CiXdUYage8%3D48qI0VLiwguasX4UVKrqwZvIMLqwQt5PKJwykeKYYb2W2PTFdp', #doremonnft6
-            'AAAAAAAAAAAAAAAAAAAAADr%2BcgEAAAAASKIajwVBfHJEGgI2aBKwUpE2WnY%3DOyMKbUHgen9Uodq5AqxBGOoD1XXhtQo8bH2cPEuXG5fVbCRABw', #doremonnft7
-            'AAAAAAAAAAAAAAAAAAAAAHD%2BcgEAAAAA%2Bk%2F3Hx%2BEqAZF9gtRPHz1Uf7UZQA%3DGvCP2VLnbpPNT38fIK6zc51neV5KkxeeSIrzpfSc0iFnUSy0vw', #doremonnft8
-            'AAAAAAAAAAAAAAAAAAAAAKP%2BcgEAAAAAME%2FkNOtZwk92G7Yd3YTCaMEMNRw%3DeNsqKEIpzSnJpa5nnSAUHxaA5aed4Su57w2ihGK3OyJlrGLjW8', #doremonnft9
-            'AAAAAAAAAAAAAAAAAAAAALr%2BcgEAAAAA702rhkJ2k5tM97UsP8gNnR6u0W0%3D5nC1sbBqIDaWuZIXjOGdnlmrGL4JeCAdkjcLHrf9SSuSC6ncuw', #doremonnft10
-            'AAAAAAAAAAAAAAAAAAAAAKtqcwEAAAAA5bzWcvLrRlMlTzjX7C7h1p3R7Ms%3DgZ622s5XMmzhKB2qWWy0tTk0j7i76W9ogRhk5FXIj5wXGgM7L2', #rpxxrqwhpfpuyjbjwl@kvhrr.com
-            'AAAAAAAAAAAAAAAAAAAAAMZqcwEAAAAAgONybl%2FEje7mgLzbVl1LeL8L19I%3D7zkf8gGdt1MG0EnujYOgOYyCrqEWyaK5Kt65vn6D10kPjtANbj', #uaeonrpeoduqtelxia@kvhrw.com
+            'AAAAAAAAAAAAAAAAAAAAANmGQQEAAAAAU%2FFD1pctqU9d8QEnJuYegAWI7Gg%3DvxNAUmFtxxUPRpCtfPcl5j7FyBbqzRPNxoRxEhBCbdA6tIjqLv', 
+            'AAAAAAAAAAAAAAAAAAAAAF9lZQEAAAAAfJi0sna3YwoxlZ0WW84HdyY74BA%3DGbwIxBQz83eChkdNcqOSiCcHDncxpWpMAGJyK2gPVDsMnL8oIt',   
+            'AAAAAAAAAAAAAAAAAAAAAARDZgEAAAAADYYkyRrrYyhAYVuNpBY%2Bguqu5D8%3DlRKskVNz9fd9FvWaLGpJVonzzscugcD5l5FGLaLT9NWx6zaO82', 
+            'AAAAAAAAAAAAAAAAAAAAAMlmZAEAAAAAJ%2Bizx52ZQp4GuNPBn2Q5ZHVYUaI%3D88pFf4rm7aID4yjYj7Bpk7lFG5pTVW2Fsmh4IlFnUKhA3TP3Ki', 
+            'AAAAAAAAAAAAAAAAAAAAACii6QAAAAAAcm9MSth7nqAXO80q6j6rtmHVu5Q%3D5dLyPGVkTm1lu8bhjWOXM1RLe0wSnXhjiWgDkT4yn8urLta9Uq', 
+            'AAAAAAAAAAAAAAAAAAAAADshcAEAAAAAKphEqM9INoFMpcQUYpjmElRaSxc%3D4cEXtxAHIhrLNaFQLmPtiZYwUNi1ZHYytnST76xABdq23XGD3e', 
+            'AAAAAAAAAAAAAAAAAAAAAFEgcAEAAAAAvUL2ZU6Z9WUMHU1H31iAR%2BNJXLc%3DXAwgE5rjUWtkACtbPtyad4Q82FenYxvN7HgHooSFfIWHVHdP1Q', 
+            'AAAAAAAAAAAAAAAAAAAAAOAhcAEAAAAA6TR5xLM3%2FB5yEKy8NM8sLMYZ1l8%3Dtp35xnDx8WCD0jHT44BEXqfu3ywkzg8i6CSqxvwNaAKh9owmqs', 
+            'AAAAAAAAAAAAAAAAAAAAAClAbAEAAAAAtXO8Co4bSkmGmWUx77ZPjYQneqM%3DaIPAHGm6SBw9MJpYnVG8Zfgv7sb7L6AHlt3SNX4bqpODd4rLTR', 
+            'AAAAAAAAAAAAAAAAAAAAAL%2F9cgEAAAAASPq0PwHy7ODA1ksg95iWISa7znE%3Dgbi4HPTwySmsjLujfD98YFWbwiVOu8PRKZOU5SI4hbmgRZQtAx', 
+            'AAAAAAAAAAAAAAAAAAAAAOz9cgEAAAAA8g54SXVnUx6kktUQ239xmtLZE%2Bs%3D7B47SFaHZr4yTaA0gzM7ks50W08KlEPaTDeqBSQoMgMQ9cmec0',
+            'AAAAAAAAAAAAAAAAAAAAAAn%2BcgEAAAAAUFth6iYg3CpSmyul9CiXdUYage8%3D48qI0VLiwguasX4UVKrqwZvIMLqwQt5PKJwykeKYYb2W2PTFdp', 
+            'AAAAAAAAAAAAAAAAAAAAADr%2BcgEAAAAASKIajwVBfHJEGgI2aBKwUpE2WnY%3DOyMKbUHgen9Uodq5AqxBGOoD1XXhtQo8bH2cPEuXG5fVbCRABw', 
+            'AAAAAAAAAAAAAAAAAAAAAHD%2BcgEAAAAA%2Bk%2F3Hx%2BEqAZF9gtRPHz1Uf7UZQA%3DGvCP2VLnbpPNT38fIK6zc51neV5KkxeeSIrzpfSc0iFnUSy0vw', 
+            'AAAAAAAAAAAAAAAAAAAAAKP%2BcgEAAAAAME%2FkNOtZwk92G7Yd3YTCaMEMNRw%3DeNsqKEIpzSnJpa5nnSAUHxaA5aed4Su57w2ihGK3OyJlrGLjW8',
+            'AAAAAAAAAAAAAAAAAAAAALr%2BcgEAAAAA702rhkJ2k5tM97UsP8gNnR6u0W0%3D5nC1sbBqIDaWuZIXjOGdnlmrGL4JeCAdkjcLHrf9SSuSC6ncuw', 
+            'AAAAAAAAAAAAAAAAAAAAAKtqcwEAAAAA5bzWcvLrRlMlTzjX7C7h1p3R7Ms%3DgZ622s5XMmzhKB2qWWy0tTk0j7i76W9ogRhk5FXIj5wXGgM7L2', 
+            'AAAAAAAAAAAAAAAAAAAAAMZqcwEAAAAAgONybl%2FEje7mgLzbVl1LeL8L19I%3D7zkf8gGdt1MG0EnujYOgOYyCrqEWyaK5Kt65vn6D10kPjtANbj',
         ]
 
 idx = len(TOKEN_LIST) - 1
@@ -65,7 +65,6 @@ def get_user_by_username(username):
   limit_token = set()
   while found == False:
     res = get_twitter_response(url, bearer_oauth, params, local_token)
-        # if 'data' not in followers_res or followers_res['status'] == 429:
     if 'data' not in res and 'status' in res:
       limit_token.add(local_token)
       local_idx = (local_idx + 1) % len(TOKEN_LIST)
@@ -112,7 +111,6 @@ def get_all_timeline_tweets_by_username(username):
     'tweet.fields': 'author_id,conversation_id,created_at,in_reply_to_user_id,public_metrics,referenced_tweets,source,text',
     'start_time': '2010-11-06T00:00:00Z',
     'end_time': get_iso_time(time.time() - (24 * 60 * 10)).split(".")[0] + "Z"
-    # 'place.fields': 'country_code,geo,name,place_type'
   }
   url = f'https://api.twitter.com/2/users/{user_id}/tweets'
   all_followers = []
@@ -125,21 +123,15 @@ def get_all_timeline_tweets_by_username(username):
   limit_token = set()
   while has_next_page:
     followers_res = get_twitter_response(url, bearer_oauth, params, local_token)
-    # if 'data' not in followers_res or followers_res['status'] == 429:
     data = []
     if 'data' not in followers_res and 'meta' not in followers_res:
       limit_token.add(local_token)
-      # print(f"Over limit token {local_token}")
       local_idx = (local_idx + 1) % len(TOKEN_LIST)
       local_token = TOKEN_LIST[local_idx]
       if len(limit_token) == len(TOKEN_LIST):
         limit_token = set()
         local_idx = 0
         print("All tokens have been used. Sleep for 15 minutes! in get_tweets_by_username")
-        # print(followers_res)
-        # print(limit_token)
-        # print(local_token)
-        # print(user_id)
         time.sleep(15 * 60)
       continue
     elif 'data' in followers_res:
@@ -161,14 +153,12 @@ if __name__ == "__main__":
         twitter = nft_json['twitter']
         if twitter != '' and list(timeline_tweet_db.find({'twitter': twitter})) != []: continue
         twitters.add(twitter)
-        # if twitter != '' : twitters.add(twitter)
     print("Start crawling timeline tweets!")
     for twitter_url in twitters:
         try:
             username = get_twitter_username(twitter_url)
         
             print(f"Searching timeline tweets for {username}")
-            # user_id = get_user_id_by_username(username)
             timeline_tweets = get_all_timeline_tweets_by_username(username)
             
             if timeline_tweets == []: continue
