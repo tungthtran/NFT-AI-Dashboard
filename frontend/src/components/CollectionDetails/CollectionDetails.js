@@ -104,7 +104,7 @@ const CollectionDetails = (props) => {
 
             <Grid spacing={1} container>
                 <Grid xs={3} item>
-                    <img style={{ width: "10vw", height: "auto", borderRadius: "2em" }} src={img} alt="" />
+                    <img style={{ width: "13vw", height: "auto", borderRadius: "50%" }} src={img} alt="" />
                 </Grid>
                 <Grid xs={4} item style={{ marginRight: "4vw" }}>
                     <div style={{ fontSize: "35px", marginBottom: "1vh" }}>{name}</div>
@@ -130,7 +130,6 @@ const CollectionDetails = (props) => {
                         volume24h={round(latestValue(timeSeries.volume24h))}
                         volumeAll={round(latestValue(timeSeries.volumeAll))}
                         listCount={latestValue(timeSeries.listedCount)}
-                        followers={latestValue(timeSeries.follower)}
                         shock={shock}
                     />}
                 </Grid>
@@ -143,15 +142,15 @@ const CollectionDetails = (props) => {
 
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                        <CircleIcon style={{ color: "rgba(32, 226, 47, 1)", marginRight: "0.25vw" }} />
+                                        <CircleIcon style={{ color: "#394990", marginRight: "0.25vw" }} />
                                         <div>Sentiment</div>
                                     </div>
                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                        <CircleIcon style={{ color: "rgba(33, 150, 243, 1)", marginRight: "0.25vw" }} />
+                                        <CircleIcon style={{ color: "#46acb7", marginRight: "0.25vw" }} />
                                         <div>Floor price</div>
                                     </div>
                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                        <CircleIcon style={{ color: "#9932cc", marginRight: "0.25vw" }} />
+                                        <CircleIcon style={{ color: "#fd3c99", marginRight: "0.25vw" }} />
                                         <div>Listed Count</div>
                                     </div>
                                 </div>

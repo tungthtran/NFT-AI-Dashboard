@@ -23,7 +23,7 @@ function PieChart({ isSentiment, positive, neutral, negative }) {
         backgroundColor: "#0e1217",
         titleTextStyle: { color: '#A8B3CF' },
         legendTextStyle: { color: '#A8B3CF' },
-        colors: ['rgb(132, 235, 176)', 'rgb(240, 131, 131)', 'rgb(250, 224, 145)']
+        colors: ['#46acb7', '#fd3c99', '#daa520']
     };
 
     return (

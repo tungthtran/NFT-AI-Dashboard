@@ -4,7 +4,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import { round } from "../../helper/utils";
  
-const InfoCard = ({ floorPrice, volume24h, volumeAll, listCount, followers, shock }) => {
+const InfoCard = ({ floorPrice, volume24h, volumeAll, listCount, shock }) => {
  
    const titles = ["Floor price", "Listed count", "Volume (24h)", "Volume (All time)"]
  
