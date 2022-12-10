@@ -32,7 +32,7 @@ app.use(cors());
 
 app.post("/load-sentiment-by-tag", async (req, res) => {
   const tag = req.body.tag;
-  console.log("tag", tag);
+  console.log("The sentiment tag is: ", tag);
   const nfts = await Collection_Anal.find({ tag: tag }).catch((error) => {
     console.log("Error in finding sentiment for tag " + tag + ". " + error);
     res.sendStatus(500);
@@ -51,7 +51,6 @@ app.post("/load-collection-time-series", async (req, res) => {
     getTimeStamp(a["createdAt"]) - getTimeStamp(b["createdAt"]);
   });
 
-  const dateTime = timeSeries.map((dict) => dict["createdAt"]);
   const hypes = timeSeries.map((dict) => getHypeFromDict(dict));
   const followers = timeSeries.map((dict) => dict["twitter_followers_count"]);
   const positives = timeSeries.map((dict) => dict["twitter_sent_avg_positive"]);
@@ -64,10 +63,10 @@ app.post("/load-collection-time-series", async (req, res) => {
   const listedCount = timeSeries.map((dict) => dict["_doc"]["listedCount"]);
 
   const norms = timeSeries.map((dict) => dict["twitter_sent_avg_norm"]);
-  const timeStamps = timeSeries.map((dict) => getTimeStamp(dict["createdAt"]));
+  const dateTime = timeSeries.map((dict) => getTimeStamp(dict["createdAt"]));
 
   const data = {
-    dateTime: timeStamps,
+    dateTime: dateTime,
     hype: hypes,
     follower: followers,
     positive: positives,
